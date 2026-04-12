@@ -295,6 +295,43 @@
     display: inline-flex; align-items: center; gap: 8px;
   }
   .btn-outline:hover { border-color: var(--mint); color: var(--mint); background: rgba(94,212,154,0.05); }
+  .btn-certificate {
+    background: linear-gradient(135deg, #1a3a5c, #1e5799);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 13px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1.5px solid rgba(100,180,255,0.35);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    box-shadow: 0 4px 20px rgba(30,87,153,0.38), inset 0 1px 0 rgba(255,255,255,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-certificate::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%;
+    width: 40%; height: 200%;
+    background: rgba(255,255,255,0.12);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+  }
+  .btn-certificate:hover::before { left: 130%; }
+  .btn-certificate:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(30,87,153,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
+    border-color: rgba(100,180,255,0.65);
+  }
+  .btn-certificate .cert-ribbon {
+    font-size: 1.1em;
+  }
 
   .hero-stats-row {
     display: flex;
@@ -1008,6 +1045,7 @@
     <li><a href="#registration">Registration</a></li>
     <li><a href="#awards">Awards</a></li>
     <li><a href="https://csetgaposa.github.io/registration/" target="_blank" class="topbar-cta">Submit Abstract →</a></li>
+    <li><a href="https://csetgaposa.github.io/certificate-/" target="_blank" style="background:linear-gradient(135deg,#1a3a5c,#1e5799);color:#fff!important;font-weight:700!important;border-radius:7px;padding:7px 13px!important;border:1px solid rgba(100,180,255,0.35);margin-left:4px;">🎓 Certificates</a></li>
   </ul>
 </nav>
 
@@ -1085,6 +1123,7 @@
     <div class="hero-btns">
       <a href="https://csetgaposa.github.io/registration/" target="_blank" class="btn-primary">📨 Submit Abstract</a>
       <a href="https://csetgaposa.github.io/registration/" target="_blank" class="btn-outline">🎟 Register Now</a>
+      <a href="https://csetgaposa.github.io/certificate-/" target="_blank" class="btn-certificate"><span class="cert-ribbon">🎓</span> Get Your Certificate</a>
       <a href="#welcome" class="btn-outline">📖 Learn More</a>
     </div>
 
@@ -1331,7 +1370,7 @@
         <div class="leader-card">
           <div class="leader-avatar">⚙️</div>
           <div>
-            <div class="leader-name">Engr. Oyebola O. O.</div>
+            <div class="leader-name">Engr. Oyebola B. O.</div>
             <div class="leader-role">Dean, School of Engineering & Technology</div>
           </div>
         </div>
@@ -1360,7 +1399,7 @@
           <div class="guide-item"><span class="guide-key">Review Process</span><span class="guide-val">Double-Blind Peer Review — each abstract reviewed by at least two independent experts</span></div>
           <div class="guide-item"><span class="guide-key">Review Criteria</span><span class="guide-val">Originality, Technical Quality, Relevance to Themes, Clarity of Presentation</span></div>
           <div class="guide-item"><span class="guide-key">Ethics Policy</span><span class="guide-val">Plagiarism check required; submissions must be original and not under review elsewhere</span></div>
-          <div class="guide-item"><span class="guide-key">TPC Enquiries</span><span class="guide-val">Contact the Secretariat at <a href="mailto:icseecr@gaposa.edu.ng">icseecr@gaposa.edu.ng</a></span></div>
+          <div class="guide-item"><span class="guide-key">TPC Enquiries</span><span class="guide-val">Contact the Secretariat at <a href="/cdn-cgi/l/email-protection#d6bfb5a5b3b3b5a496b1b7a6b9a5b7f8b3b2a3f8b8b1"><span class="__cf_email__" data-cfemail="563f3525333335241631372639253778333223783831">[email&#160;protected]</span></a></span></div>
         </div>
       </div>
       <div class="notice-box" style="margin-top:1rem;">
@@ -1417,7 +1456,7 @@
           <div class="sponsor-name">Your Organisation Here</div>
         </div>
       </div>
-      <a href="mailto:icseecr@gaposa.edu.ng" style="display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:white;padding:11px 24px;border-radius:10px;text-decoration:none;font-weight:600;font-size:13.5px;transition:opacity 0.2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">✉ Become a Sponsor →</a>
+      <a href="/cdn-cgi/l/email-protection#a7cec4d4c2c2c4d5e7c0c6d7c8d4c689c2c3d289c9c0" style="display:inline-flex;align-items:center;gap:8px;background:var(--forest);color:white;padding:11px 24px;border-radius:10px;text-decoration:none;font-weight:600;font-size:13.5px;transition:opacity 0.2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">✉ Become a Sponsor →</a>
     </section>
 
     <!-- CONTACT -->
@@ -1445,18 +1484,18 @@
             <div class="contact-value">+234 803 382 4573</div>
           </div>
         </a>
-        <a href="mailto:icseecr@gaposa.edu.ng" class="contact-card">
+        <a href="/cdn-cgi/l/email-protection#68010b1b0d0d0b1a280f0918071b09460d0c1d46060f" class="contact-card">
           <span class="contact-icon">✉️</span>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">icseecr@gaposa.edu.ng</div>
+            <div class="contact-value"><span class="__cf_email__" data-cfemail="bcd5dfcfd9d9dfcefcdbddccd3cfdd92d9d8c992d2db">[email&#160;protected]</span></div>
           </div>
         </a>
-        <a href="mailto:csetgaposa@gmail.com" class="contact-card">
+        <a href="/cdn-cgi/l/email-protection#4c2f3f29382b2d3c233f2d0c2b212d2520622f2321" class="contact-card">
           <span class="contact-icon">✉️</span>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">csetgaposa@gmail.com</div>
+            <div class="contact-value"><span class="__cf_email__" data-cfemail="e2819187968583928d9183a2858f838b8ecc818d8f">[email&#160;protected]</span></div>
           </div>
         </a>
         <div class="contact-card">
@@ -1590,13 +1629,35 @@
   </aside>
 </div>
 
+<!-- CERTIFICATE CTA BANNER -->
+<section style="background:linear-gradient(135deg,#0b2240 0%,#1a3a5c 50%,#0f6040 100%);padding:3rem 2rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(100,180,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(100,180,255,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;"></div>
+  <div style="position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(30,87,153,0.35),transparent 70%);pointer-events:none;"></div>
+  <div style="max-width:860px;margin:0 auto;text-align:center;position:relative;z-index:1;">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(100,180,255,0.1);border:1px solid rgba(100,180,255,0.3);border-radius:100px;padding:5px 18px;font-size:11px;font-weight:700;color:#a8d4ff;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.4rem;">
+      <span style="width:6px;height:6px;background:#5ed49a;border-radius:50%;display:inline-block;animation:pulse 2s ease-in-out infinite;"></span>
+      Auto-Generated · Instant Issuance
+    </div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;color:#fff;margin-bottom:0.8rem;line-height:1.25;">Claim Your Conference Certificate</h2>
+    <p style="font-size:15px;color:rgba(255,255,255,0.65);max-width:580px;margin:0 auto 2rem;line-height:1.7;">Participants, presenters, and attendees of <strong style="color:rgba(255,255,255,0.9);">ICSEECR 2026</strong> can instantly generate and download their personalised certificate of participation or presentation.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;align-items:center;">
+      <a href="https://csetgaposa.github.io/certificate-/" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#1e5799,#2980d4);color:#fff;font-weight:700;font-size:15px;padding:15px 34px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(100,180,255,0.4);box-shadow:0 6px 28px rgba(30,87,153,0.5);transition:all 0.3s;letter-spacing:0.3px;">
+        🎓 &nbsp;Generate My Certificate
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span style="font-size:13px;color:rgba(255,255,255,0.4);">Free &nbsp;·&nbsp; No login required &nbsp;·&nbsp; Instant PDF download</span>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
     <div>
       <h4>ICSEECR 2026</h4>
       <p>International Conference on Sustainable Engineering, Environmental Innovation &amp; Climate Resilience. Hosted by <a href="https://new.gaposa.edu.ng" target="_blank" rel="noopener" style="color:var(--gold-light);font-weight:600;text-decoration:none;">Gateway ICT Polytechnic</a>, Saapade, Ogun State, Nigeria.</p>
-      <p style="margin-top:0.8rem;"><a href="mailto:icseecr@gaposa.edu.ng" style="color:var(--gold-light);">✉ icseecr@gaposa.edu.ng</a> &nbsp;·&nbsp; <a href="mailto:csetgaposa@gmail.com" style="color:var(--gold-light);">✉ csetgaposa@gmail.com</a> &nbsp;·&nbsp; <a href="tel:+2348054012303">📞 +234 805 401 2303</a></p>
+      <p style="margin-top:0.8rem;"><a href="/cdn-cgi/l/email-protection#fc959f8f99999f8ebc9b9d8c938f9dd2999889d2929b" style="color:var(--gold-light);">✉ <span class="__cf_email__" data-cfemail="bdd4deced8d8decffddadccdd2cedc93d8d9c893d3da">[email&#160;protected]</span></a> &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection#284b5b4d5c4f4958475b49684f45494144064b4745" style="color:var(--gold-light);">✉ <span class="__cf_email__" data-cfemail="4a29392f3e2d2b3a25392b0a2d272b232664292527">[email&#160;protected]</span></a> &nbsp;·&nbsp; <a href="tel:+2348054012303">📞 +234 805 401 2303</a></p>
     </div>
     <div>
       <h4>Quick Links</h4>
@@ -1612,6 +1673,7 @@
         <li><a href="#sponsors">Sponsors</a></li>
         <li><a href="#tpc">TPC</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="https://csetgaposa.github.io/certificate-/" target="_blank" rel="noopener" style="color:var(--gold-pale);font-weight:700;">🎓 Get Certificate</a></li>
       </ul>
     </div>
     <div>
@@ -1630,17 +1692,4 @@
   </div>
   <div class="footer-bottom">
     <span>© 2026 ICSEECR Organising Committee · Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria</span>
-    <span class="tagline-badge">Engineering Smart and Resilient Systems for Sustainable Development</span>
-  </div>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Active section nav highlighting
-  const snavItems = document.querySelectorAll('.snav-item');
-  const sections = document.querySelectorAll('.conf-section');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        snavItems.forEach(a => a.classList.remove('active'));
-        const id = entry.target.id;
-        const link = docum
+    <span class="tagline-b
