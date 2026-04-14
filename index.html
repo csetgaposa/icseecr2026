@@ -333,6 +333,121 @@
     font-size: 1.1em;
   }
 
+  /* ── COUNTDOWN TIMER ── */
+  .countdown-section {
+    margin: 2.4rem 0 0;
+    padding: 1.6rem 2rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(94,212,154,0.18);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    max-width: 680px;
+    position: relative;
+    overflow: hidden;
+  }
+  .countdown-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(26,138,90,0.06) 0%, rgba(201,151,58,0.04) 100%);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+  .countdown-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--mint);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .countdown-label .pulse-dot {
+    width: 7px; height: 7px;
+    background: var(--jade);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .countdown-grid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 80px;
+    min-width: 70px;
+  }
+  .countdown-number {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    color: var(--gold-pale);
+    line-height: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,151,58,0.22);
+    border-radius: 12px;
+    width: 100%;
+    text-align: center;
+    padding: 0.7rem 0.5rem;
+    letter-spacing: -1px;
+    transition: color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .countdown-number::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40%;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+  }
+  .countdown-unit-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 0.5rem;
+  }
+  .countdown-sep {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--jade);
+    line-height: 1;
+    align-self: center;
+    padding-bottom: 1.4rem;
+    opacity: 0.6;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 0.6; } 50% { opacity: 0.15; } }
+  .countdown-conference-starts {
+    margin-top: 1rem;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .countdown-conference-starts strong { color: rgba(255,255,255,0.7); font-weight: 600; }
+  .countdown-ended {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--mint);
+    text-align: center;
+    padding: 1rem;
+    letter-spacing: -0.3px;
+  }
+
   .hero-stats-row {
     display: flex;
     flex-wrap: wrap;
@@ -1077,7 +1192,7 @@
         <div class="hero-meta-icon">📍</div>
         <div>
           <div class="label">Venue</div>
-          <div class="value">Onafowokan Auditorium, Gateway ICT Polytechnic</div>
+          <div class="value">Prince Dapo Abiodun Leadership Auditorium, Gateway (ICT) Polytechnic Saapade</div>
         </div>
       </div>
       <div class="hero-meta-item">
@@ -1126,6 +1241,67 @@
       <a href="https://csetgaposa.github.io/certificate-/" target="_blank" class="btn-certificate"><span class="cert-ribbon">🎓</span> Get Your Certificate</a>
       <a href="#welcome" class="btn-outline">📖 Learn More</a>
     </div>
+
+    <!-- COUNTDOWN TIMER -->
+    <div class="countdown-section" id="conf-countdown">
+      <div class="countdown-label">
+        <span class="pulse-dot"></span>
+        Conference Countdown &nbsp;·&nbsp; July 20, 2026
+      </div>
+      <div class="countdown-grid" id="countdown-grid">
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-days">--</div>
+          <div class="countdown-unit-label">Days</div>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-hours">--</div>
+          <div class="countdown-unit-label">Hours</div>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-mins">--</div>
+          <div class="countdown-unit-label">Minutes</div>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-secs">--</div>
+          <div class="countdown-unit-label">Seconds</div>
+        </div>
+      </div>
+      <div class="countdown-conference-starts">
+        📍 <strong>Prince Dapo Abiodun Leadership Auditorium</strong>, Gateway (ICT) Polytechnic Saapade, Ogun State, Nigeria
+      </div>
+    </div>
+    <script>
+    (function(){
+      var target = new Date('2026-07-20T09:00:00').getTime();
+      function pad(n){ return String(n).padStart(2,'0'); }
+      function tick(){
+        var now = Date.now();
+        var diff = target - now;
+        if(diff <= 0){
+          var el = document.getElementById('conf-countdown');
+          if(el){ el.innerHTML = '<div class="countdown-ended">🎉 The Conference is now underway! Welcome to ICSEECR 2026.</div>'; }
+          return;
+        }
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        var days = document.getElementById('cd-days');
+        var hours = document.getElementById('cd-hours');
+        var mins = document.getElementById('cd-mins');
+        var secs = document.getElementById('cd-secs');
+        if(days) days.textContent = pad(d);
+        if(hours) hours.textContent = pad(h);
+        if(mins) mins.textContent = pad(m);
+        if(secs) secs.textContent = pad(s);
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+    </script>
 
     <div class="hero-stats-row">
       <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Technical Tracks</div></div>
@@ -1621,7 +1797,7 @@
         </a><br/>
         <a href="https://new.gaposa.edu.ng" target="_blank" rel="noopener" style="font-weight:700;color:var(--green-deep);text-decoration:none;font-size:13.5px;">Gateway ICT Polytechnic</a><br/>
         Saapade, Ogun State, Nigeria<br/><br/>
-        <em style="color:var(--gray);">Onafowokan Main Auditorium</em><br/><br/>
+        <em style="color:var(--gray);">Prince Dapo Abiodun Leadership Auditorium</em><br/><br/>
         <a href="https://new.gaposa.edu.ng" target="_blank" rel="noopener" style="display:inline-block;background:var(--green-mid);color:white;font-size:12px;font-weight:600;padding:7px 16px;border-radius:7px;text-decoration:none;">🌐 Visit Polytechnic Website →</a>
       </div>
     </div>
