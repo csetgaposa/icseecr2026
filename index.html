@@ -1215,22 +1215,36 @@
       <div class="deadline-item">
         <div class="d-icon">📋</div>
         <div>
-          <div class="d-label">Abstract Deadline</div>
-          <div class="d-date">June 08, 2026</div>
+          <div class="d-label">Abstract Deadline <span style="font-size:10px;background:#e65100;color:#fff;border-radius:4px;padding:1px 6px;vertical-align:middle;font-weight:700;letter-spacing:0.5px;">EXTENDED</span></div>
+          <div class="d-date" style="color:var(--gold-bright);font-weight:700;">June 28, 2026</div>
         </div>
       </div>
       <div class="deadline-item">
         <div class="d-icon">✅</div>
         <div>
           <div class="d-label">Acceptance Notification</div>
-          <div class="d-date">June 28, 2026</div>
+          <div class="d-date">July 10, 2026</div>
         </div>
       </div>
       <div class="deadline-item">
         <div class="d-icon">📄</div>
         <div>
-          <div class="d-label">Full Paper Deadline</div>
+          <div class="d-label">Full Paper Submission</div>
           <div class="d-date">July 14, 2026</div>
+        </div>
+      </div>
+      <div class="deadline-item">
+        <div class="d-icon">🖊️</div>
+        <div>
+          <div class="d-label">Author Correction</div>
+          <div class="d-date">August 07, 2026</div>
+        </div>
+      </div>
+      <div class="deadline-item">
+        <div class="d-icon">🏁</div>
+        <div>
+          <div class="d-label">Camera-Ready</div>
+          <div class="d-date">August 15, 2026</div>
         </div>
       </div>
     </div>
@@ -1449,8 +1463,8 @@
           <div class="guide-item"><span class="guide-key">File Format</span><span class="guide-val">PDF Only</span></div>
           <div class="guide-item"><span class="guide-key">Review Process</span><span class="guide-val">Double-Blind Peer Review</span></div>
           <div class="guide-item"><span class="guide-key">Plagiarism Limit</span><span class="guide-val">Less than 20%</span></div>
-          <div class="guide-item"><span class="guide-key">Submission Deadline</span><span class="guide-val">June 08, 2026</span></div>
-          <div class="guide-item"><span class="guide-key">Acceptance Notification</span><span class="guide-val">June 28, 2026</span></div>
+          <div class="guide-item"><span class="guide-key">Submission Deadline</span><span class="guide-val" style="color:#0f6040;font-weight:700;">June 28, 2026 <em style="font-size:11px;background:#e65100;color:#fff;border-radius:3px;padding:1px 5px;font-style:normal;font-weight:700;">EXTENDED</em></span></div>
+          <div class="guide-item"><span class="guide-key">Acceptance Notification</span><span class="guide-val">July 10, 2026</span></div>
 
         </div>
       </div>
@@ -1458,18 +1472,82 @@
 
     <!-- FULL PAPER -->
     <section id="fullpaper" class="conf-section">
-      <h2 class="section-heading"><div class="sh-icon">📝</div> Full Paper Submission (Post-Conference)</h2>
-      <p style="font-size:14px;color:#2c3e35;margin-bottom:1.2rem;">Accepted presenters are invited to submit full papers for potential publication. The organising committee is pursuing publication through <strong>IEEE Xplore Digital Library</strong> (pending IEEE technical sponsorship approval). Authors will be notified of the confirmed publication outlet.</p>
+      <h2 class="section-heading"><div class="sh-icon">📝</div> Full Paper Submission & Review Pipeline</h2>
+      <p style="font-size:14px;color:#2c3e35;margin-bottom:1.6rem;">Accepted authors are required to submit full papers for peer review <strong>before</strong> the conference. Reviewer feedback is provided, authors present at the conference, then revise based on both reviewer and audience feedback before final camera-ready submission for publication.</p>
+
+      <!-- Pipeline visual -->
+      <div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin-bottom:2rem;border-radius:14px;overflow:hidden;border:1px solid var(--line-strong);">
+
+        <div style="flex:1;min-width:140px;background:linear-gradient(160deg,#f0faf4,#e8f5ee);padding:1.2rem 1rem;border-right:1px solid var(--line-strong);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;">
+          <div style="font-size:1.6rem;">📋</div>
+          <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Step 1</div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--forest-mid);">Abstract Submission</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--emerald);font-weight:700;background:rgba(26,138,90,0.1);padding:3px 10px;border-radius:20px;">Jun 28, 2026</div>
+          <div style="font-size:11px;color:var(--slate);">Submit 300–500 word abstract</div>
+        </div>
+
+        <div style="flex:1;min-width:140px;background:linear-gradient(160deg,#f0faf4,#e8f5ee);padding:1.2rem 1rem;border-right:1px solid var(--line-strong);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;">
+          <div style="font-size:1.6rem;">✅</div>
+          <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Step 2</div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--forest-mid);">Acceptance Notification</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--emerald);font-weight:700;background:rgba(26,138,90,0.1);padding:3px 10px;border-radius:20px;">Jul 10, 2026</div>
+          <div style="font-size:11px;color:var(--slate);">Abstract accepted / rejected</div>
+        </div>
+
+        <div style="flex:1;min-width:140px;background:linear-gradient(160deg,#fffbf0,#fff5db);padding:1.2rem 1rem;border-right:1px solid var(--line-strong);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;">
+          <div style="font-size:1.6rem;">📄</div>
+          <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;">Step 3</div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--forest-mid);">Full Paper Submission</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;background:rgba(201,151,58,0.1);padding:3px 10px;border-radius:20px;">Jul 14, 2026</div>
+          <div style="font-size:11px;color:var(--slate);">IEEE format, PDF, 6–12 pages</div>
+        </div>
+
+        <div style="flex:1;min-width:140px;background:linear-gradient(160deg,#f0f4ff,#e8eeff);padding:1.2rem 1rem;border-right:1px solid var(--line-strong);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;">
+          <div style="font-size:1.6rem;">🎤</div>
+          <div style="font-size:10px;font-weight:700;color:#4a6cf7;letter-spacing:1px;text-transform:uppercase;">Step 4</div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--forest-mid);">Conference & Peer Review</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:#4a6cf7;font-weight:700;background:rgba(74,108,247,0.1);padding:3px 10px;border-radius:20px;">Jul 20–24, 2026</div>
+          <div style="font-size:11px;color:var(--slate);">Present · Receive reviewer feedback</div>
+        </div>
+
+        <div style="flex:1;min-width:140px;background:linear-gradient(160deg,#fff5f0,#ffece5);padding:1.2rem 1rem;border-right:1px solid var(--line-strong);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;">
+          <div style="font-size:1.6rem;">🖊️</div>
+          <div style="font-size:10px;font-weight:700;color:#e65100;letter-spacing:1px;text-transform:uppercase;">Step 5</div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--forest-mid);">Author Correction</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:#e65100;font-weight:700;background:rgba(230,81,0,0.1);padding:3px 10px;border-radius:20px;">Aug 07, 2026</div>
+          <div style="font-size:11px;color:var(--slate);">Revise based on review + audience feedback</div>
+        </div>
+
+        <div style="flex:1;min-width:140px;background:linear-gradient(160deg,#e8f5e9,#d8f0dc);padding:1.2rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;">
+          <div style="font-size:1.6rem;">🏁</div>
+          <div style="font-size:10px;font-weight:700;color:#2e7d32;letter-spacing:1px;text-transform:uppercase;">Step 6</div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--forest-mid);">Camera-Ready Submission</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:#2e7d32;font-weight:700;background:rgba(46,125,50,0.1);padding:3px 10px;border-radius:20px;">Aug 15, 2026</div>
+          <div style="font-size:11px;color:var(--slate);">Final version for IEEE Xplore publication</div>
+        </div>
+
+      </div>
+
+      <!-- Requirements box -->
       <div class="guide-box">
         <div class="guide-box-header">📐 Full Paper Requirements</div>
         <div class="guide-box-body">
           <div class="guide-item"><span class="guide-key">Format</span><span class="guide-val">IEEE Two-Column Template</span></div>
-          <div class="guide-item"><span class="guide-key">Length</span><span class="guide-val">6 – 12 Pages</span></div>
+          <div class="guide-item"><span class="guide-key">Length</span><span class="guide-val">6 – 12 Pages (including references)</span></div>
           <div class="guide-item"><span class="guide-key">File Format</span><span class="guide-val">PDF (IEEE PDF eXpress compliant)</span></div>
-          <div class="guide-item"><span class="guide-key">Review Process</span><span class="guide-val">Standard IEEE review for Xplore inclusion</span></div>
-          <div class="guide-item"><span class="guide-key">Submission Deadline</span><span class="guide-val">July 14, 2026 (post-conference)</span></div>
-          <div class="guide-item"><span class="guide-key">Target Publication</span><span class="guide-val">IEEE Xplore Digital Library <em style="font-size:12px;color:#888;">(pending approval)</em></span></div>
+          <div class="guide-item"><span class="guide-key">Similarity</span><span class="guide-val">&lt; 20% (plagiarism check required)</span></div>
+          <div class="guide-item"><span class="guide-key">Blind Review</span><span class="guide-val">Double-blind — remove author names from manuscript</span></div>
+          <div class="guide-item"><span class="guide-key">Full Paper Submission</span><span class="guide-val" style="color:var(--gold);font-weight:700;">July 14, 2026</span></div>
+          <div class="guide-item"><span class="guide-key">Author Correction Deadline</span><span class="guide-val" style="color:#e65100;font-weight:700;">August 07, 2026</span></div>
+          <div class="guide-item"><span class="guide-key">Camera-Ready Deadline</span><span class="guide-val" style="color:#2e7d32;font-weight:700;">August 15, 2026</span></div>
+          <div class="guide-item"><span class="guide-key">Review Process</span><span class="guide-val">Double-blind peer review by TPC members</span></div>
+          <div class="guide-item"><span class="guide-key">Target Publication</span><span class="guide-val">IEEE Xplore Digital Library <em style="font-size:12px;color:#888;">(pending IEEE approval)</em></span></div>
         </div>
+      </div>
+
+      <div class="notice-box" style="margin-top:1.2rem;border-left-color:var(--gold);background:rgba(201,151,58,0.07);">
+        <span class="ni">💡</span>
+        <span><strong>Important:</strong> Authors must submit their full paper by <strong>July 14, 2026</strong> — before the conference — so that peer review feedback can be provided to authors at or before their presentation. Revised (camera-ready) papers incorporating reviewer and audience feedback are due by <strong>August 15, 2026</strong>.</span>
       </div>
     </section>
 
@@ -1696,8 +1774,8 @@
       <div class="widget-body">
         <ul class="key-dates-list">
           <li class="kd-item">
-            <div class="kd-label" style="color:var(--emerald);font-weight:700;">NEW</div>
-            <div style="font-size:13px;color:var(--slate);">Abstract submission deadline extended to <strong>June 08, 2026</strong></div>
+            <div class="kd-label" style="color:#e65100;font-weight:700;">🔴 EXTENDED + PIPELINE UPDATED</div>
+            <div style="font-size:13px;color:var(--slate);">Abstract deadline extended to <strong style="color:#0f6040;">June 28, 2026</strong>. Full paper due <strong>Jul 14</strong> (before conference). Author corrections due <strong>Aug 07</strong>. Camera-ready due <strong>Aug 15</strong>.</div>
           </li>
           <li class="kd-item">
             <div class="kd-label">Keynote speakers</div>
@@ -1717,20 +1795,28 @@
       <div class="widget-body">
         <ul class="key-dates-list">
           <li class="kd-item">
-            <div class="kd-label">Abstract Submission Deadline</div>
-            <div class="kd-date">June 08, 2026</div>
+            <div class="kd-label">📋 Abstract Submission Deadline <span style="font-size:10px;background:#e65100;color:#fff;border-radius:3px;padding:1px 5px;font-weight:700;">EXTENDED</span></div>
+            <div class="kd-date" style="color:var(--emerald);font-weight:700;">June 28, 2026</div>
           </li>
           <li class="kd-item">
-            <div class="kd-label">Acceptance Notification</div>
-            <div class="kd-date">June 28, 2026</div>
+            <div class="kd-label">✅ Acceptance Notification</div>
+            <div class="kd-date">July 10, 2026</div>
           </li>
           <li class="kd-item">
-            <div class="kd-label">Conference Dates</div>
+            <div class="kd-label">📄 Full Paper Submission</div>
+            <div class="kd-date" style="color:var(--gold);font-weight:700;">July 14, 2026</div>
+          </li>
+          <li class="kd-item">
+            <div class="kd-label">🎤 Conference & Presentations</div>
             <div class="kd-date highlight">July 20–24, 2026</div>
           </li>
           <li class="kd-item">
-            <div class="kd-label">Full Paper Submission</div>
-            <div class="kd-date">July 14, 2026</div>
+            <div class="kd-label">🖊️ Author Correction Deadline</div>
+            <div class="kd-date" style="color:#e65100;font-weight:700;">August 07, 2026</div>
+          </li>
+          <li class="kd-item">
+            <div class="kd-label">🏁 Camera-Ready Submission</div>
+            <div class="kd-date" style="color:#2e7d32;font-weight:700;">August 15, 2026</div>
           </li>
         </ul>
       </div>
@@ -1857,10 +1943,12 @@
     <div>
       <h4>Important Dates</h4>
       <ul>
-        <li>Abstract Deadline: June 08, 2026</li>
-        <li>Notification: June 28, 2026</li>
-        <li>Conference: Jul 20–24, 2026</li>
-        <li>Full Paper: Jul 14, 2026</li>
+        <li>Abstract Deadline: <strong>June 28, 2026</strong> <em style="font-size:10px;background:#e65100;color:#fff;border-radius:3px;padding:1px 4px;font-style:normal;">EXTENDED</em></li>
+        <li>Acceptance Notification: July 10, 2026</li>
+        <li>Full Paper Submission: July 14, 2026</li>
+        <li>Conference: July 20–24, 2026</li>
+        <li>Author Corrections: August 07, 2026</li>
+        <li>Camera-Ready: August 15, 2026</li>
       </ul>
       <div style="margin-top:1rem;">
         <h4>Publication</h4>
