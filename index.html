@@ -1061,6 +1061,42 @@
   }
   .aa-card .aa-authors { font-size: 13px; color: var(--slate); line-height: 1.7; margin-bottom: 0.4rem; }
   .aa-card .aa-authors strong { color: var(--ink); }
+  .aa-author-list {
+    list-style: none;
+    margin: 0 0 0.6rem 0;
+    padding: 0;
+    counter-reset: aa-author;
+  }
+  .aa-author-item {
+    counter-increment: aa-author;
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.6;
+    padding: 2px 0 2px 1.4em;
+    position: relative;
+  }
+  .aa-author-item::before {
+    content: counter(aa-author) ".";
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .aa-author-name { color: var(--ink); font-weight: 600; }
+  .aa-author-aff { color: var(--muted); font-style: italic; margin-left: 6px; }
+  .aa-author-aff::before { content: '— '; }
+  .aa-corr-tag {
+    display: inline-block;
+    background: rgba(201,151,58,0.15);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    margin-left: 8px;
+  }
   .aa-card .aa-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
   .aa-track-badge {
     display: inline-block;
@@ -1668,7 +1704,7 @@
       <h2 class="section-heading"><div class="sh-icon">✅</div> Accepted Abstracts</h2>
       <div class="notice-box">
         <span class="ni">📢</span>
-        <span>This list updates automatically as the Organising Committee accepts new submissions — no need to refresh the page repeatedly. Authors: please verify your name, affiliation, and co-authors. Report any error to the Secretariat.</span>
+        <span>This list updates automatically as the Organising Committee accepts new submissions — no need to refresh the page repeatedly. Each paper lists every author and co-author exactly as submitted, with the corresponding author marked. If your name, affiliation, or co-author details need correcting, please email the <a href="/cdn-cgi/l/email-protection#fc959f8f99999f8ebc9b9d8c938f9dd2999889d2929b" style="color:var(--emerald);font-weight:600;">Secretariat</a> with your Submission ID (shown on the right of your card).</span>
       </div>
       <div id="aa-toolbar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.6rem;margin-bottom:1rem;">
         <div id="aa-count" style="font-size:13px;color:var(--slate);font-weight:600;"></div>
@@ -2168,17 +2204,19 @@
     }
 
     listEl.innerHTML = abstracts.map(function (p) {
-      var authors = (p.authors || []).map(function (a) {
+      var authorsArr = (p.authors && p.authors.length) ? p.authors : [{ name: 'Author details pending', affiliation: '', corresponding: false }];
+      var authorsHtml = '<ol class="aa-author-list">' + authorsArr.map(function (a) {
         var name = escapeHtml(a.name || 'Unknown Author');
-        var aff  = a.affiliation ? ' — ' + escapeHtml(a.affiliation) : '';
-        return a.corresponding ? ('<strong>' + name + '</strong>' + aff) : (name + aff);
-      }).join('; ');
+        var aff  = a.affiliation ? '<span class="aa-author-aff">' + escapeHtml(a.affiliation) + '</span>' : '';
+        var corrTag = a.corresponding ? '<span class="aa-corr-tag">Corresponding Author</span>' : '';
+        return '<li class="aa-author-item"><span class="aa-author-name">' + name + '</span>' + corrTag + aff + '</li>';
+      }).join('') + '</ol>';
       var trackBadge = p.track ? '<span class="aa-track-badge">' + escapeHtml(p.track) + '</span>' : '';
       var idBadge = p.submissionId ? '<span class="aa-id-badge">' + escapeHtml(p.submissionId) + '</span>' : '';
       return '' +
         '<div class="aa-card">' +
           '<div class="aa-title">' + escapeHtml(p.title || '(Untitled)') + '</div>' +
-          '<div class="aa-authors">' + authors + '</div>' +
+          authorsHtml +
           '<div class="aa-meta">' + trackBadge + idBadge + '</div>' +
         '</div>';
     }).join('');
