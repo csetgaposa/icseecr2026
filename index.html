@@ -1041,6 +1041,86 @@
   }
   .notice-box .ni { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
 
+  /* Accepted Abstracts */
+  .aa-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--emerald);
+    border-radius: 12px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 0.9rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .aa-card .aa-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.08rem;
+    color: var(--forest);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+  .aa-card .aa-authors { font-size: 13px; color: var(--slate); line-height: 1.7; margin-bottom: 0.4rem; }
+  .aa-card .aa-authors strong { color: var(--ink); }
+  .aa-card .aa-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  .aa-track-badge {
+    display: inline-block;
+    background: rgba(26,138,90,0.1);
+    color: var(--emerald);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    letter-spacing: 0.2px;
+  }
+  .aa-id-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+  }
+
+  /* Admin publish-control panel (script menu) */
+  .aa-admin-toggle {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 1200;
+    background: var(--forest);
+    color: #fff;
+    border: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+  }
+  .aa-admin-panel {
+    position: fixed;
+    bottom: 78px;
+    right: 22px;
+    z-index: 1200;
+    width: 280px;
+    background: var(--white);
+    border: 1px solid var(--line-strong);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    padding: 1rem 1.1rem;
+    display: none;
+    font-size: 13px;
+  }
+  .aa-admin-panel.open { display: block; }
+  .aa-admin-panel h4 { font-size: 12.5px; color: var(--forest); margin-bottom: 0.6rem; letter-spacing: 0.3px; text-transform: uppercase; }
+  .aa-admin-row { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.55rem; }
+  .aa-admin-row span { color: var(--slate); }
+  .aa-switch { position: relative; width: 38px; height: 20px; flex-shrink: 0; }
+  .aa-switch input { opacity: 0; width: 0; height: 0; }
+  .aa-switch .slider { position: absolute; inset: 0; background: #ccc; border-radius: 999px; cursor: pointer; transition: .2s; }
+  .aa-switch .slider::before { content: ''; position: absolute; height: 14px; width: 14px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: .2s; }
+  .aa-switch input:checked + .slider { background: var(--emerald); }
+  .aa-switch input:checked + .slider::before { transform: translateX(18px); }
+  .aa-admin-note { font-size: 11px; color: var(--muted); line-height: 1.5; margin-top: 0.3rem; }
+
   /* Form embed */
   .form-container {
     background: var(--white);
@@ -1281,6 +1361,7 @@
     <li><a href="#themes">Themes</a></li>
     <li><a href="#tracks">Tracks</a></li>
     <li><a href="#guidelines">Guidelines</a></li>
+    <li><a href="#accepted-abstracts">Accepted</a></li>
     <li><a href="#keynotes">Keynotes</a></li>
     <li><a href="#registration">Registration</a></li>
     <li><a href="#awards">Awards</a></li>
@@ -1442,6 +1523,7 @@
     <a href="#themes" class="snav-item">School Themes</a>
     <a href="#tracks" class="snav-item">Technical Tracks</a>
     <a href="#guidelines" class="snav-item">Abstract Guidelines</a>
+    <a href="#accepted-abstracts" class="snav-item">Accepted Abstracts</a>
     <a href="#fullpaper" class="snav-item">Full Paper</a>
     <a href="#registration" class="snav-item">Registration</a>
     <a href="#awards" class="snav-item">Awards</a>
@@ -1578,6 +1660,26 @@
           <div class="guide-item"><span class="guide-key">Acceptance Notification</span><span class="guide-val">June 28, 2026</span></div>
 
         </div>
+      </div>
+    </section>
+
+    <!-- ACCEPTED ABSTRACTS (live, auto-updating) -->
+    <section id="accepted-abstracts" class="conf-section">
+      <h2 class="section-heading"><div class="sh-icon">✅</div> Accepted Abstracts</h2>
+      <div class="notice-box">
+        <span class="ni">📢</span>
+        <span>This list updates automatically as the Organising Committee accepts new submissions — no need to refresh the page repeatedly. Authors: please verify your name, affiliation, and co-authors. Report any error to the Secretariat.</span>
+      </div>
+      <div id="aa-toolbar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.6rem;margin-bottom:1rem;">
+        <div id="aa-count" style="font-size:13px;color:var(--slate);font-weight:600;"></div>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <span id="aa-updated" style="font-size:11.5px;color:var(--muted);"></span>
+          <button id="aa-refresh-btn" type="button" style="background:var(--forest);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;">🔄 Refresh</button>
+        </div>
+      </div>
+      <div id="aa-list"><div style="padding:2rem;text-align:center;color:var(--muted);font-size:13.5px;">Loading accepted abstracts…</div></div>
+      <div id="aa-disabled" style="display:none;padding:2rem;text-align:center;background:var(--paper);border-radius:12px;color:var(--slate);font-size:13.5px;">
+        The Accepted Abstracts list has not been published yet. Please check back soon — the Organising Committee updates this page directly from the review system.
       </div>
     </section>
 
@@ -1723,15 +1825,13 @@
         <span>Submit your abstract using the form below. By submitting, authors confirm that the work is original, unpublished, and not concurrently under review elsewhere. Submissions must be in PDF format, 300–500 words, with less than 20% similarity index. The review process is double-blind.</span>
       </div>
       <div class="form-container">
-        <div style="padding:2.5rem;text-align:center;background:linear-gradient(135deg,#f0fdf6,#e6f7ef);">
-          <div style="font-size:2.5rem;margin-bottom:1rem;">📋</div>
-          <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);font-size:1.3rem;margin-bottom:0.6rem;">Ready to Submit Your Abstract?</h3>
-          <p style="font-size:13.5px;color:var(--gray);margin-bottom:1.5rem;max-width:400px;margin-left:auto;margin-right:auto;">Click the button below to open the official submission form. Ensure your abstract is 300–500 words, in PDF format, with less than 20% plagiarism.</p>
-          <a href="https://csetgaposa.github.io/registration/" target="_blank" style="display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--green-deep);font-weight:700;font-size:14px;padding:14px 32px;border-radius:10px;text-decoration:none;letter-spacing:0.3px;box-shadow:0 4px 18px rgba(212,168,67,0.35);transition:all 0.2s;">📨 Open Submission Form →</a>
-          <p style="font-size:11.5px;color:var(--gray);margin-top:1rem;">Opens in a new tab · Submissions acknowledged within 48 hours</p>
-        </div>
+        <iframe src="https://csetgaposa.github.io/registration/" loading="lazy" title="ICSEECR 2026 Abstract Submission Form"></iframe>
       </div>
+      <p style="font-size:11.5px;color:var(--gray);margin-top:0.8rem;text-align:center;">
+        Form not loading? <a href="https://csetgaposa.github.io/registration/" target="_blank" style="color:var(--emerald);font-weight:600;">Open it in a new tab →</a> · Submissions acknowledged within 48 hours
+      </p>
     </section>
+
 
 
     <!-- SPONSORS & PARTNERS -->
@@ -2000,6 +2100,7 @@
         <li><a href="#themes">School Themes</a></li>
         <li><a href="#tracks">Technical Tracks</a></li>
         <li><a href="#guidelines">Submission Guidelines</a></li>
+        <li><a href="#accepted-abstracts">Accepted Abstracts</a></li>
         <li><a href="#keynotes">Keynotes</a></li>
     <li><a href="#registration">Registration</a></li>
         <li><a href="#awards">Awards</a></li>
@@ -2025,4 +2126,161 @@
   </div>
   <div class="footer-bottom">
     <span>© 2026 ICSEECR Organising Committee · Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria</span>
-    <span class="tagline-b
+    <span class="tagline-badge">Sustainable Future, Engineered Today</span>
+  </div>
+</footer>
+
+<!-- ═══════════════ ACCEPTED ABSTRACTS — LIVE FEED ═══════════════ -->
+<script>
+(function () {
+  // Apps Script Web App URL (deploy the conference Google Apps Script
+  // as a Web App → Execute as: Me → Who has access: Anyone, then paste
+  // the /exec URL below). Until set, the section shows a friendly notice.
+  var AA_ENDPOINT = "https://script.google.com/macros/s/AKfycbw-Q-yIRxxYvnNO5z6j4t0-e1hWHeHXTYggpoM-TmpHZCImKjxHDbArLtLCbpphKlNI/exec";
+
+  var listEl     = document.getElementById('aa-list');
+  var disabledEl = document.getElementById('aa-disabled');
+  var countEl    = document.getElementById('aa-count');
+  var updatedEl  = document.getElementById('aa-updated');
+  var refreshBtn = document.getElementById('aa-refresh-btn');
+
+  function escapeHtml(s) {
+    return (s || '').toString()
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function renderAbstracts(data) {
+    if (!data || data.enabled === false) {
+      listEl.innerHTML = '';
+      disabledEl.style.display = 'block';
+      countEl.textContent = '';
+      updatedEl.textContent = '';
+      return;
+    }
+    disabledEl.style.display = 'none';
+    var abstracts = data.abstracts || [];
+    countEl.textContent = abstracts.length + (abstracts.length === 1 ? ' paper accepted so far' : ' papers accepted so far');
+    updatedEl.textContent = data.updated ? ('Last updated: ' + new Date(data.updated).toLocaleString()) : '';
+
+    if (abstracts.length === 0) {
+      listEl.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted);font-size:13.5px;">No papers have been marked Accepted yet. Check back soon.</div>';
+      return;
+    }
+
+    listEl.innerHTML = abstracts.map(function (p) {
+      var authors = (p.authors || []).map(function (a) {
+        var name = escapeHtml(a.name || 'Unknown Author');
+        var aff  = a.affiliation ? ' — ' + escapeHtml(a.affiliation) : '';
+        return a.corresponding ? ('<strong>' + name + '</strong>' + aff) : (name + aff);
+      }).join('; ');
+      var trackBadge = p.track ? '<span class="aa-track-badge">' + escapeHtml(p.track) + '</span>' : '';
+      var idBadge = p.submissionId ? '<span class="aa-id-badge">' + escapeHtml(p.submissionId) + '</span>' : '';
+      return '' +
+        '<div class="aa-card">' +
+          '<div class="aa-title">' + escapeHtml(p.title || '(Untitled)') + '</div>' +
+          '<div class="aa-authors">' + authors + '</div>' +
+          '<div class="aa-meta">' + trackBadge + idBadge + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  // JSONP — Apps Script Web Apps don't return CORS headers on GET, so a
+  // plain fetch() would fail silently. Same technique used by the
+  // registration page's phase-check (checkPhaseOnLoad / icseecr2026Phase).
+  var aaCallbackName = 'icseecr2026Accepted';
+  var aaPendingTimeout = null;
+
+  window[aaCallbackName] = function (data) {
+    if (aaPendingTimeout) { clearTimeout(aaPendingTimeout); aaPendingTimeout = null; }
+    renderAbstracts(data);
+  };
+
+  function loadAbstracts() {
+    if (!AA_ENDPOINT || AA_ENDPOINT.indexOf('PASTE_YOUR') === 0) {
+      renderAbstracts({ enabled: false });
+      return;
+    }
+    listEl.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted);font-size:13.5px;">Refreshing…</div>';
+
+    var prevTag = document.getElementById('aa-jsonp-tag');
+    if (prevTag) prevTag.remove();
+
+    var s = document.createElement('script');
+    s.id = 'aa-jsonp-tag';
+    s.src = AA_ENDPOINT + '?action=accepted&callback=' + aaCallbackName + '&t=' + Date.now();
+    s.onerror = function () {
+      listEl.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted);font-size:13.5px;">Could not load the live list right now — please refresh the page in a moment.</div>';
+    };
+    document.head.appendChild(s);
+
+    // Fail-safe: if the callback never fires (network issue, deployment
+    // not yet redeployed after an edit, etc.) show a friendly message.
+    aaPendingTimeout = setTimeout(function () {
+      listEl.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--muted);font-size:13.5px;">Could not load the live list right now — please refresh the page in a moment.</div>';
+    }, 8000);
+  }
+
+  if (refreshBtn) refreshBtn.addEventListener('click', loadAbstracts);
+  loadAbstracts();
+  // Auto-refresh every 60s so the page stays current without manual reloads.
+  setInterval(loadAbstracts, 60000);
+
+  // ── Local admin reveal panel (purely a viewing convenience for
+  // committee members on shared devices; it does NOT control the
+  // real publish switch — that lives in the Google Sheet's
+  // "ICSEECR Tools ▸ 🌐 Accepted Abstracts (Website)" menu, since
+  // that is the trusted, authenticated source of truth). ──
+  var section = document.getElementById('accepted-abstracts');
+  var toggleBtn = document.getElementById('aa-admin-toggle');
+  var panel = document.getElementById('aa-admin-panel');
+  var hideSwitch = document.getElementById('aa-admin-hide-switch');
+
+  if (toggleBtn && panel) {
+    toggleBtn.addEventListener('click', function () {
+      panel.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+      if (!panel.contains(e.target) && e.target !== toggleBtn) panel.classList.remove('open');
+    });
+  }
+  if (hideSwitch && section) {
+    var savedPref = sessionStorage.getItem('aa_locally_hidden') === '1';
+    hideSwitch.checked = !savedPref;
+    section.style.display = savedPref ? 'none' : '';
+    document.querySelectorAll('a[href="#accepted-abstracts"]').forEach(function (a) {
+      a.style.display = savedPref ? 'none' : '';
+    });
+    hideSwitch.addEventListener('change', function () {
+      var hidden = !hideSwitch.checked;
+      section.style.display = hidden ? 'none' : '';
+      document.querySelectorAll('a[href="#accepted-abstracts"]').forEach(function (a) {
+        a.style.display = hidden ? 'none' : '';
+      });
+      sessionStorage.setItem('aa_locally_hidden', hidden ? '1' : '0');
+    });
+  }
+  var manualRefreshLink = document.getElementById('aa-admin-refresh');
+  if (manualRefreshLink) manualRefreshLink.addEventListener('click', function (e) { e.preventDefault(); loadAbstracts(); });
+})();
+</script>
+
+<!-- Floating admin control ("script menu") for the Accepted Abstracts widget -->
+<button id="aa-admin-toggle" class="aa-admin-toggle" title="Accepted Abstracts display settings" aria-label="Accepted Abstracts display settings">⚙️</button>
+<div id="aa-admin-panel" class="aa-admin-panel">
+  <h4>Accepted Abstracts — Display</h4>
+  <div class="aa-admin-row">
+    <span>Show section on this device</span>
+    <label class="aa-switch">
+      <input type="checkbox" id="aa-admin-hide-switch" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="aa-admin-row">
+    <span>Refresh list now</span>
+    <a href="#" id="aa-admin-refresh" style="color:var(--emerald);font-weight:600;text-decoration:none;">🔄 Refresh</a>
+  </div>
+  <p class="aa-admin-note">This switch only affects what <em>you</em> see on this device/browser. The real publish ON/OFF control — and editing of accepted paper details — is managed by the committee from the Google Sheet menu: <strong>ICSEECR Tools ▸ 🌐 Accepted Abstracts (Website)</strong>.</p>
+</div>
+
+</body>
+</html>
