@@ -2195,7 +2195,10 @@
     }
     disabledEl.style.display = 'none';
     var abstracts = data.abstracts || [];
-    countEl.textContent = abstracts.length + (abstracts.length === 1 ? ' paper accepted so far' : ' papers accepted so far');
+    // NOTE: intentionally NOT showing a numeric total here — the public
+    // page should not reveal how many abstracts have been accepted so
+    // far, only the accepted papers themselves.
+    countEl.textContent = 'Accepted Abstracts';
     updatedEl.textContent = data.updated ? ('Last updated: ' + new Date(data.updated).toLocaleString()) : '';
 
     if (abstracts.length === 0) {
@@ -2260,8 +2263,16 @@
 
   if (refreshBtn) refreshBtn.addEventListener('click', loadAbstracts);
   loadAbstracts();
-  // Auto-refresh every 60s so the page stays current without manual reloads.
-  setInterval(loadAbstracts, 60000);
+  // Auto-refresh is intentionally slow (every 10 minutes) so the list stays
+  // put long enough for authors to read through every accepted abstract
+  // without it jumping/reflowing under them. This does NOT affect how
+  // quickly a committee change shows up on-demand: the "🔄 Refresh" button
+  // above (and the matching link in the gear-icon admin panel) still calls
+  // loadAbstracts() immediately, so anyone can force an instant refresh
+  // right after the committee runs "Publish / Sync Now" from the Google
+  // Sheet ("ICSEECR Tools ▸ 🌐 Accepted Abstracts (Website)").
+  var AA_AUTO_REFRESH_MS = 10 * 60 * 1000; // 10 minutes
+  setInterval(loadAbstracts, AA_AUTO_REFRESH_MS);
 
   // ── Local admin reveal panel (purely a viewing convenience for
   // committee members on shared devices; it does NOT control the
