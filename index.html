@@ -517,23 +517,51 @@
 
   /* ── MAIN LAYOUT ── */
   .main-wrap {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 3rem 2rem;
     display: grid;
-    grid-template-columns: 1fr 310px;
-    gap: 3rem;
+    grid-template-columns: 230px 1fr 310px;
+    gap: 2rem;
     align-items: start;
   }
-  @media (max-width: 960px) {
-    .main-wrap { grid-template-columns: 1fr; gap: 2rem; }
-    .sidebar { order: -1; }
+  @media (max-width: 1180px) {
+    .main-wrap { grid-template-columns: 200px 1fr; }
+    .sidebar { display: none; }
+  }
+  @media (max-width: 780px) {
+    .main-wrap { grid-template-columns: 1fr; gap: 1.2rem; }
+    .page-nav { position: static; order: -1; }
+  }
+
+  /* ── PAGE NAV (left) ── */
+  .page-nav {
+    position: sticky; top: 96px;
+    display: flex; flex-direction: column; gap: 4px;
+    background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    padding: 0.8rem; max-height: calc(100vh - 120px); overflow-y: auto;
+    box-shadow: var(--shadow-sm);
+  }
+  .page-nav-btn {
+    display: flex; align-items: center; gap: 9px;
+    font-family: inherit; font-size: 12.5px; font-weight: 600; text-align: left;
+    color: var(--slate); background: transparent; border: none; border-radius: 9px;
+    padding: 9px 10px; cursor: pointer; transition: all 0.18s; line-height: 1.3;
+  }
+  .page-nav-btn .pnb-icon { font-size: 15px; flex-shrink: 0; width: 18px; text-align: center; }
+  .page-nav-btn:hover { background: rgba(26,138,90,0.07); color: var(--forest); }
+  .page-nav-btn.active { background: var(--emerald); color: var(--white); }
+  @media (max-width: 780px) {
+    .page-nav { flex-direction: row; flex-wrap: wrap; max-height: none; overflow: visible; }
+    .page-nav-btn { flex: 1 1 auto; justify-content: center; }
   }
 
   /* ── SECTIONS ── */
   .conf-section {
+    display: none;
     margin-bottom: 3.5rem;
   }
+  .conf-section.page-active { display: block; }
   .section-heading {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.65rem;
@@ -652,6 +680,58 @@
     margin-top: 3px;
   }
   .school-body { padding: 1.4rem 1.6rem; }
+
+  /* ── PROGRAM SECTION ── */
+  .prog-tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 1rem 0 1.4rem;
+  }
+  .prog-tab {
+    font-family: inherit; font-size: 12.5px; font-weight: 600;
+    color: var(--forest); background: var(--white);
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 8px 16px; cursor: pointer; transition: all 0.2s;
+  }
+  .prog-tab:hover { background: rgba(26,138,90,0.06); }
+  .prog-tab.active {
+    background: var(--emerald); color: var(--white); border-color: var(--emerald);
+  }
+  .prog-panel { display: none; }
+  .prog-panel.active { display: block; }
+  .prog-daymeta { font-size: 12.5px; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+  .prog-hall-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.05rem;
+    color: var(--forest); margin: 1.4rem 0 0.6rem;
+    padding-bottom: 6px; border-bottom: 1px solid var(--line);
+  }
+  .prog-row {
+    display: grid; grid-template-columns: 90px 1fr; gap: 12px;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--line);
+  }
+  .prog-row:last-child { border-bottom: none; }
+  .prog-time { font-size: 11.5px; font-weight: 700; color: var(--emerald); white-space: nowrap; }
+  .prog-session { font-size: 13.5px; color: var(--slate); line-height: 1.5; }
+  .prog-speaker { font-weight: 700; color: var(--forest); }
+  .prog-id { font-size: 11px; color: var(--muted); }
+  .prog-overview-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .prog-overview-table th, .prog-overview-table td {
+    border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top;
+  }
+  .prog-overview-table th { background: var(--emerald); color: var(--white); }
+  .prog-overview-table td { color: var(--slate); }
+  .prog-live-tag {
+    display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--emerald);
+    background: rgba(26,138,90,0.08); border-radius: 999px; padding: 2px 10px; margin-left: 8px;
+  }
+  .prog-download-btn {
+    font-family: inherit; font-size: 13px; font-weight: 700; color: var(--white);
+    background: linear-gradient(135deg, var(--emerald), var(--jade));
+    border: none; border-radius: 8px; padding: 10px 18px; cursor: pointer;
+    box-shadow: var(--shadow-sm); transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .prog-download-btn:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .prog-download-btn:disabled { opacity: 0.6; cursor: wait; }
+
   .focus-list {
     display: flex;
     flex-wrap: wrap;
@@ -1384,6 +1464,7 @@
   .poster-lightbox-close:hover { background: var(--gold-bright); }
 
 </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -1399,6 +1480,7 @@
     <li><a href="#tracks">Tracks</a></li>
     <li><a href="#guidelines">Guidelines</a></li>
     <li><a href="#accepted-abstracts">Accepted</a></li>
+    <li><a href="#program">Program</a></li>
     <li><a href="#keynotes">Keynotes</a></li>
     <li><a href="#registration">Registration</a></li>
     <li><a href="#awards">Awards</a></li>
@@ -1561,6 +1643,7 @@
     <a href="#tracks" class="snav-item">Technical Tracks</a>
     <a href="#guidelines" class="snav-item">Abstract Guidelines</a>
     <a href="#accepted-abstracts" class="snav-item">Accepted Abstracts</a>
+    <a href="#program" class="snav-item">Program</a>
     <a href="#fullpaper" class="snav-item">Full Paper</a>
     <a href="#registration" class="snav-item">Registration</a>
     <a href="#awards" class="snav-item">Awards</a>
@@ -1574,6 +1657,25 @@
 
 <!-- MAIN CONTENT -->
 <div class="main-wrap">
+  <nav class="page-nav" id="page-nav">
+    <button class="page-nav-btn" data-page="welcome"><span class="pnb-icon">🌍</span>Welcome</button>
+    <button class="page-nav-btn" data-page="keynotes"><span class="pnb-icon">🎤</span>Keynote Speakers</button>
+    <button class="page-nav-btn" data-page="industrial-lead"><span class="pnb-icon">🏭</span>Industrial Lead Presenter</button>
+    <button class="page-nav-btn" data-page="chief-guest"><span class="pnb-icon">🎓</span>Chief Guest of Honour</button>
+    <button class="page-nav-btn" data-page="themes"><span class="pnb-icon">🏫</span>School Themes</button>
+    <button class="page-nav-btn" data-page="tracks"><span class="pnb-icon">🔬</span>Technical Tracks</button>
+    <button class="page-nav-btn" data-page="guidelines"><span class="pnb-icon">📄</span>Submission Guidelines</button>
+    <button class="page-nav-btn" data-page="accepted-abstracts"><span class="pnb-icon">✅</span>Accepted Abstracts</button>
+    <button class="page-nav-btn" data-page="program"><span class="pnb-icon">🗓️</span>Conference Program</button>
+    <button class="page-nav-btn" data-page="fullpaper"><span class="pnb-icon">📝</span>Full Paper Submission</button>
+    <button class="page-nav-btn" data-page="registration"><span class="pnb-icon">💳</span>Registration</button>
+    <button class="page-nav-btn" data-page="awards"><span class="pnb-icon">🏆</span>Award Sessions</button>
+    <button class="page-nav-btn" data-page="leadership"><span class="pnb-icon">👥</span>Conference Leadership</button>
+    <button class="page-nav-btn" data-page="tpc"><span class="pnb-icon">🎓</span>Technical Committee</button>
+    <button class="page-nav-btn" data-page="submit"><span class="pnb-icon">📨</span>Abstract Submission</button>
+    <button class="page-nav-btn" data-page="sponsors"><span class="pnb-icon">🤝</span>Sponsors &amp; Partners</button>
+    <button class="page-nav-btn" data-page="contact"><span class="pnb-icon">📞</span>Contact &amp; Secretariat</button>
+  </nav>
   <main>
 
     <!-- WELCOME -->
@@ -1770,6 +1872,91 @@
       <div id="aa-list"><div style="padding:2rem;text-align:center;color:var(--muted);font-size:13.5px;">Loading accepted abstracts…</div></div>
       <div id="aa-disabled" style="display:none;padding:2rem;text-align:center;background:var(--paper);border-radius:12px;color:var(--slate);font-size:13.5px;">
         The Accepted Abstracts list has not been published yet. Please check back soon — the Organising Committee updates this page directly from the review system.
+      </div>
+    </section>
+
+    <!-- PROGRAM -->
+    <section id="program" class="conf-section">
+      <h2 class="section-heading"><div class="sh-icon">🗓️</div> Conference Program<span class="prog-live-tag" id="prog-live-tag">● LIVE</span></h2>
+      <div style="margin:0.8rem 0 0.4rem;">
+        <button id="prog-download-btn" class="prog-download-btn">⬇ Download Full Program (Excel)</button>
+      </div>
+      <div class="notice-box">
+        <span class="ni">📢</span>
+        <span>Presentations begin Tuesday afternoon (Day 2) and run through Day 4, generated automatically from the live Accepted Abstracts feed. Each presenter is assigned a <strong>fixed time slot the moment their paper is accepted</strong> — later acceptances are added to the back of the queue and never shift an already-assigned presenter's time. Clock times are provisional 15-minute slots and may be fine-tuned by the committee.</span>
+      </div>
+      <div class="notice-box" style="border-left-color:var(--gold);background:rgba(201,151,58,0.06);margin-top:0.8rem;">
+        <span class="ni">🔒</span>
+        <span>Once you see your name on this schedule, that time slot is yours — plan your travel and preparation around it. New abstracts accepted later are simply queued after the last-scheduled presenter in their track, so earlier presenters are never moved.</span>
+      </div>
+
+      <div class="prog-tabs" role="tablist">
+        <button class="prog-tab active" data-tab="overview">Overview</button>
+        <button class="prog-tab" data-tab="day1">Day 1</button>
+        <button class="prog-tab" data-tab="day2">Day 2</button>
+        <button class="prog-tab" data-tab="day3">Day 3</button>
+        <button class="prog-tab" data-tab="day4">Day 4</button>
+        <button class="prog-tab" data-tab="day5">Day 5</button>
+      </div>
+
+      <!-- OVERVIEW -->
+      <div class="prog-panel active" id="prog-overview">
+        <div class="prog-daymeta">Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria · 20–24 July 2026 · Timezone: WAT (UTC+1)</div>
+        <table class="prog-overview-table">
+          <tr><th>Day</th><th>Date</th><th>Focus</th></tr>
+          <tr><td>Day 1</td><td>Mon, 20 Jul</td><td>Arrival &amp; Registration — no sessions</td></tr>
+          <tr><td>Day 2</td><td>Tue, 21 Jul</td><td>Opening Ceremony, Chief Guest Remarks, Keynote Addresses 1, 2 &amp; 4 and Industrial Lead Paper Presentation, then Parallel Technical Sessions begin (live) from 14:15</td></tr>
+          <tr><td>Day 3</td><td>Wed, 22 Jul</td><td id="ov-day3-focus">Keynote Addresses 3 &amp; 5, then Parallel Technical Sessions continue (live) + Poster Session</td></tr>
+          <tr><td>Day 4</td><td>Thu, 23 Jul</td><td id="ov-day4-focus">Parallel Technical Sessions conclude (live) + Closing &amp; Awards</td></tr>
+          <tr><td>Day 5</td><td>Fri, 24 Jul</td><td>Departure — no sessions</td></tr>
+        </table>
+      </div>
+
+      <!-- DAY 1 -->
+      <div class="prog-panel" id="prog-day1">
+        <div class="prog-daymeta">Mon, 20 Jul 2026 · Arrival Day</div>
+        <div class="prog-hall-title">Arrival &amp; Registration</div>
+        <div class="prog-row"><div class="prog-time">All Day</div><div class="prog-session">Arrival, Check-in &amp; Registration Desk Open (Hostel / Secretariat) — no paper presentations scheduled.</div></div>
+      </div>
+
+      <!-- DAY 2 (opening + all keynotes + industrial lead + LIVE from 14:15) -->
+      <div class="prog-panel" id="prog-day2">
+        <div class="prog-daymeta">Tue, 21 Jul 2026 · Opening Day · Presentations begin this afternoon — generated live from Accepted Abstracts</div>
+        <div class="prog-hall-title">Opening Ceremony &amp; Keynote Session — Main Auditorium</div>
+        <div class="prog-row"><div class="prog-time">10:30</div><div class="prog-session"><span class="prog-speaker">Dr. Sanni Kehinde Oseni</span> — Rector, Gateway ICT Polytechnic<br>Welcome &amp; Opening Remarks</div></div>
+        <div class="prog-row"><div class="prog-time">10:40</div><div class="prog-session"><span class="prog-speaker">Engr. Dr. Kadiri Kamoru Oluwatoyin, FNSE</span> — Chief Guest of Honour, Rector, The Federal Polytechnic Offa<br>Chief Guest of Honour Remarks</div></div>
+        <div class="prog-row"><div class="prog-time">10:50</div><div class="prog-session"><span class="prog-speaker">Prof. Emeritus Alireza Baghai-Wadji</span> — South Africa<br>Keynote Address 1</div></div>
+        <div class="prog-row"><div class="prog-time">11:20</div><div class="prog-session"><span class="prog-speaker">Prof. Y. L. Shuaib-Babata</span> — University of Ilorin, Nigeria<br>Keynote Address 2</div></div>
+        <div class="prog-row"><div class="prog-time">11:50</div><div class="prog-session">Group Photograph</div></div>
+        <div class="prog-row"><div class="prog-time">12:00–12:15</div><div class="prog-session">Break</div></div>
+        <div class="prog-row"><div class="prog-time">12:15</div><div class="prog-session"><span class="prog-speaker">Dr. Arc. Oluseyi Israel Abatan</span> — Moshood Abiola Polytechnic, Nigeria<br>Keynote Address 4</div></div>
+        <div class="prog-row"><div class="prog-time">12:45</div><div class="prog-session"><span class="prog-speaker">Engr. Felix Adewale Odeleye</span> — Nuclear Power Construction Engineer, UK<br>Industrial Lead Paper Presentation</div></div>
+        <div class="prog-row"><div class="prog-time">13:15–14:15</div><div class="prog-session">Lunch Break</div></div>
+        <div id="prog-day2-content"><div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px;">Loading live schedule…</div></div>
+      </div>
+
+      <!-- DAY 3 (LIVE, continues) -->
+      <div class="prog-panel" id="prog-day3">
+        <div class="prog-daymeta">Wed, 22 Jul 2026 · Keynote Session, then Parallel Technical Sessions continue — generated live from Accepted Abstracts</div>
+        <div class="prog-hall-title">Keynote Session — Main Auditorium</div>
+        <div class="prog-row"><div class="prog-time">10:30</div><div class="prog-session"><span class="prog-speaker">Dr. Rilwan Kayode Apalowo</span> — Universiti Sains Malaysia<br>Keynote Address 3</div></div>
+        <div class="prog-row"><div class="prog-time">11:00</div><div class="prog-session"><span class="prog-speaker">Dr. Emmanuel S. Babatunde</span> — Achievers University, Owo, Nigeria<br>Keynote Address 5</div></div>
+        <div id="prog-day3-content"><div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px;">Loading live schedule…</div></div>
+      </div>
+
+      <!-- DAY 4 (LIVE, continues) -->
+      <div class="prog-panel" id="prog-day4">
+        <div class="prog-daymeta">Thu, 23 Jul 2026 · Parallel Technical Sessions conclude — generated live from Accepted Abstracts</div>
+        <div id="prog-day4-content"><div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px;">Loading live schedule…</div></div>
+        <div class="prog-hall-title">Closing Ceremony — Main Auditorium</div>
+        <div class="prog-row"><div class="prog-time">TBA</div><div class="prog-session">Closing Remarks &amp; Awards Ceremony</div></div>
+      </div>
+
+      <!-- DAY 5 -->
+      <div class="prog-panel" id="prog-day5">
+        <div class="prog-daymeta">Fri, 24 Jul 2026 · Departure Day</div>
+        <div class="prog-hall-title">Departure</div>
+        <div class="prog-row"><div class="prog-time">All Day</div><div class="prog-session">Check-out &amp; Departure of Delegates (Hostel / Guest House) — no paper presentations scheduled.</div></div>
       </div>
     </section>
 
@@ -2200,6 +2387,7 @@
         <li><a href="#tracks">Technical Tracks</a></li>
         <li><a href="#guidelines">Submission Guidelines</a></li>
         <li><a href="#accepted-abstracts">Accepted Abstracts</a></li>
+        <li><a href="#program">Program</a></li>
         <li><a href="#keynotes">Keynotes</a></li>
     <li><a href="#registration">Registration</a></li>
         <li><a href="#awards">Awards</a></li>
@@ -2376,6 +2564,338 @@
 })();
 </script>
 
+<!-- ═══════════════ CONFERENCE PROGRAM — LIVE SCHEDULE FROM SAME FEED ═══════════════ -->
+<script>
+(function () {
+  // Reuses the exact same Apps Script Web App used by the Accepted Abstracts
+  // widget above (action=accepted). No separate deployment needed — whenever
+  // the committee runs "Publish / Sync Now" from the Google Sheet, this
+  // section updates too, on the same refresh cycle.
+  var PROG_ENDPOINT = "https://script.google.com/macros/s/AKfycbw-Q-yIRxxYvnNO5z6j4t0-e1hWHeHXTYggpoM-TmpHZCImKjxHDbArLtLCbpphKlNI/exec";
+  var HALLS = ['Hall A', 'Hall B', 'Hall C', 'Hall D', 'Hall E', 'Hall F'];
+  var SLOT_MINUTES = 15;
+  var latestScheduleForDownload = null; // flat array of { day, hall, track, time, speaker, title, submissionId }
+
+  function escapeHtml(s) {
+    return (s || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function addMinutes(hhmm, mins) {
+    var parts = hhmm.split(':'); var d = new Date(2000, 0, 1, +parts[0], +parts[1]);
+    d.setMinutes(d.getMinutes() + mins);
+    var h = d.getHours().toString().padStart(2, '0');
+    var m = d.getMinutes().toString().padStart(2, '0');
+    return h + ':' + m;
+  }
+
+  function firstAuthorLabel(p) {
+    var authors = (p.authors && p.authors.length) ? p.authors : null;
+    if (!authors) return 'Author details pending';
+    var first = authors[0].name || 'Unknown Author';
+    return authors.length > 1 ? (first + ' et al.') : first;
+  }
+
+  // ── Fixed, shared timeline used by EVERY hall in parallel ──
+  // Once a paper is placed at index N, it always lands on the same
+  // (day, time) pair — adding more papers later only extends the list,
+  // it never changes where index 0..N-1 land. This is what gives
+  // presenters a time that won't move once they've seen it.
+  function buildTimeline() {
+    var slots = [];
+    function addWindow(day, start, end) {
+      var t = start;
+      while (t < end) {
+        var next = addMinutes(t, SLOT_MINUTES);
+        slots.push({ day: day, time: t + '–' + next });
+        t = next;
+      }
+    }
+    addWindow('Day 2', '14:15', '17:00'); // after lunch, following Keynote 4 + Industrial Lead Paper + break
+    addWindow('Day 3', '11:30', '17:00'); // after Keynotes 3 & 5 (relocated here), both starting 10:30
+    addWindow('Day 4', '10:30', '15:30'); // day starts 10:30, before closing
+    // Reserve headroom at the very back for late acceptances so the
+    // committee never has to touch already-assigned presenters.
+    for (var i = 0; i < 24; i++) slots.push({ day: 'Additional Session (Date/Time TBA)', time: 'TBA' });
+    return slots;
+  }
+  var TIMELINE = buildTimeline();
+
+  function renderTrackBlock(hallName, trackName, papers, dayFilter) {
+    var html = '';
+    var currentDay = null;
+    papers.forEach(function (p, idx) {
+      var slot = TIMELINE[idx] || { day: 'Additional Session (Date/Time TBA)', time: 'TBA' };
+      if (slot.day !== dayFilter) return; // only render rows that fall on the day being displayed
+      if (currentDay === null) {
+        html += '<div class="prog-hall-title">' + escapeHtml(hallName) + ' — ' + escapeHtml(trackName) + '</div>';
+        currentDay = slot.day;
+      }
+      html += '<div class="prog-row">' +
+                '<div class="prog-time">' + slot.time + '</div>' +
+                '<div class="prog-session"><span class="prog-speaker">' + escapeHtml(firstAuthorLabel(p)) + '</span><br>' +
+                  escapeHtml(p.title || '(Untitled)') +
+                  (p.submissionId ? ' <span class="prog-id">[' + escapeHtml(p.submissionId) + ']</span>' : '') +
+                '</div></div>';
+    });
+    return html;
+  }
+
+  function buildSchedule(abstracts) {
+    // Group by track. Tracks are assigned to halls alphabetically (not by
+    // feed order) so hall assignment never shifts even if the review
+    // system's row order changes for pending/duplicate entries.
+    var byTrack = {};
+    abstracts.forEach(function (p) {
+      var tr = p.track || 'Unassigned Track';
+      if (!byTrack[tr]) byTrack[tr] = [];
+      byTrack[tr].push(p);
+    });
+    var trackOrder = Object.keys(byTrack).sort();
+
+    var day2Html = '', day3Html = '', day4Html = '';
+    var trackCountsHtml = '<table class="prog-overview-table"><tr><th>Track</th><th>Hall</th><th>Accepted Papers</th></tr>';
+    var downloadRows = [];
+    var overflowCount = 0;
+
+    trackOrder.forEach(function (tr, i) {
+      var hall = HALLS[i % HALLS.length];
+      var papers = byTrack[tr]; // feed order preserved = first-accepted, first-scheduled
+      trackCountsHtml += '<tr><td>' + escapeHtml(tr) + '</td><td>' + hall + '</td><td>' + papers.length + '</td></tr>';
+
+      day2Html += renderTrackBlock(hall, tr, papers, 'Day 2');
+      day3Html += renderTrackBlock(hall, tr, papers, 'Day 3');
+      day4Html += renderTrackBlock(hall, tr, papers, 'Day 4');
+
+      papers.forEach(function (p, idx) {
+        var slot = TIMELINE[idx] || { day: 'Additional Session (Date/Time TBA)', time: 'TBA' };
+        downloadRows.push({
+          day: slot.day, hall: hall, track: tr, time: slot.time,
+          speaker: firstAuthorLabel(p), title: p.title || '(Untitled)',
+          submissionId: p.submissionId || ''
+        });
+        if (slot.day.indexOf('Additional Session') === 0) overflowCount++;
+      });
+    });
+    trackCountsHtml += '</table>';
+
+    if (!trackOrder.length) {
+      var emptyMsg = '<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px;">No accepted papers yet — this schedule will populate automatically once abstracts are accepted.</div>';
+      day2Html = day3Html = day4Html = emptyMsg;
+      trackCountsHtml = '<div style="color:var(--muted);">No accepted papers yet.</div>';
+    } else {
+      if (!day2Html) day2Html = '<div style="padding:1rem;color:var(--muted);font-size:13px;">No presentations placed in this window yet.</div>';
+      day3Html += '<div class="prog-hall-title">Poster Session — Exhibition Hall</div><div class="prog-row"><div class="prog-time">18:00</div><div class="prog-session">Poster Session</div></div>';
+      if (overflowCount > 0) {
+        var overflowNote = '<div class="prog-row" style="border-bottom:none;"><div class="prog-time">TBA</div>' +
+          '<div class="prog-session"><strong>' + overflowCount + ' paper(s)</strong> accepted after the Day 2–4 schedule filled up are queued for an additional session — date/time to be confirmed. See the "Additional Session" sheet in the downloadable Excel file for the full list.</div></div>';
+        day4Html += '<div class="prog-hall-title">Additional Session — Date/Time TBA</div>' + overflowNote;
+        trackCountsHtml += '<div style="margin-top:0.6rem;color:var(--muted);">' + overflowCount + ' paper(s) currently queued for an additional session beyond Day 2–4 capacity.</div>';
+      }
+    }
+
+    document.getElementById('prog-day2-content').innerHTML = day2Html;
+    document.getElementById('prog-day3-content').innerHTML = day3Html;
+    document.getElementById('prog-day4-content').innerHTML =
+      day4Html; // closing ceremony block already static in HTML after this container
+    var ovTrackCountsEl = document.getElementById('ov-track-counts');
+    if (ovTrackCountsEl) ovTrackCountsEl.innerHTML = trackCountsHtml; // kept internally for the Excel download; not shown on-page anymore
+
+    latestScheduleForDownload = downloadRows;
+  }
+
+  var progCallbackName = 'icseecr2026Program';
+  var progPendingTimeout = null;
+
+  window[progCallbackName] = function (data) {
+    if (progPendingTimeout) { clearTimeout(progPendingTimeout); progPendingTimeout = null; }
+    var abstracts = (data && data.abstracts) || [];
+    buildSchedule(abstracts);
+  };
+
+  function loadProgram() {
+    var prevTag = document.getElementById('prog-jsonp-tag');
+    if (prevTag) prevTag.remove();
+    var s = document.createElement('script');
+    s.id = 'prog-jsonp-tag';
+    s.src = PROG_ENDPOINT + '?action=accepted&callback=' + progCallbackName + '&t=' + Date.now();
+    s.onerror = function () {
+      document.getElementById('prog-day3-content').innerHTML =
+        '<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px;">Could not load the live schedule right now — please refresh in a moment.</div>';
+    };
+    document.head.appendChild(s);
+    progPendingTimeout = setTimeout(function () {
+      document.getElementById('prog-day3-content').innerHTML =
+        '<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px;">Could not load the live schedule right now — please refresh in a moment.</div>';
+    }, 8000);
+  }
+
+  loadProgram();
+  setInterval(loadProgram, 10 * 60 * 1000); // same 10-minute cadence as Accepted Abstracts
+
+  // Tab switching
+  var tabs = document.querySelectorAll('#program .prog-tab');
+  var panels = {
+    overview: document.getElementById('prog-overview'),
+    day1: document.getElementById('prog-day1'),
+    day2: document.getElementById('prog-day2'),
+    day3: document.getElementById('prog-day3'),
+    day4: document.getElementById('prog-day4'),
+    day5: document.getElementById('prog-day5')
+  };
+  tabs.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      tabs.forEach(function (b) { b.classList.remove('active'); });
+      Object.keys(panels).forEach(function (k) { panels[k].classList.remove('active'); });
+      btn.classList.add('active');
+      panels[btn.getAttribute('data-tab')].classList.add('active');
+    });
+  });
+
+  // ── Download full program as a multi-sheet Excel workbook ──
+  var downloadBtn = document.getElementById('prog-download-btn');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', function () {
+      if (typeof XLSX === 'undefined') {
+        alert('Download library is still loading — please try again in a moment.');
+        return;
+      }
+      downloadBtn.disabled = true;
+      downloadBtn.textContent = 'Preparing download…';
+
+      var wb = XLSX.utils.book_new();
+      var rows = latestScheduleForDownload || [];
+
+      // Program Overview sheet
+      var overviewAoa = [
+        ['ICSEECR 2026 — Program Overview'],
+        ['Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria  |  20–24 July 2026  |  Timezone: WAT (UTC+1)'],
+        [],
+        ['Day', 'Date', 'Focus'],
+        ['Day 1', 'Mon, 20 Jul 2026', 'Arrival & Registration — no sessions'],
+        ['Day 2', 'Tue, 21 Jul 2026', 'Opening Ceremony, Chief Guest Remarks, Keynote Addresses 1, 2 & 4 and Industrial Lead Paper Presentation, then Parallel Technical Sessions begin (live) from 14:15'],
+        ['Day 3', 'Wed, 22 Jul 2026', 'Keynote Addresses 3 & 5, then Parallel Technical Sessions continue (live) + Poster Session'],
+        ['Day 4', 'Thu, 23 Jul 2026', 'Parallel Technical Sessions conclude (live) + Closing & Awards'],
+        ['Day 5', 'Fri, 24 Jul 2026', 'Departure — no sessions'],
+        [],
+        ['Track', 'Hall', 'Accepted Papers']
+      ];
+      var trackTotals = {};
+      rows.forEach(function (r) {
+        var key = r.track + '||' + r.hall;
+        trackTotals[key] = (trackTotals[key] || 0) + 1;
+      });
+      Object.keys(trackTotals).forEach(function (k) {
+        var parts = k.split('||');
+        overviewAoa.push([parts[0], parts[1], trackTotals[k]]);
+      });
+      var wsOverview = XLSX.utils.aoa_to_sheet(overviewAoa);
+      wsOverview['!cols'] = [{ wch: 40 }, { wch: 12 }, { wch: 60 }];
+      XLSX.utils.book_append_sheet(wb, wsOverview, 'Program Overview');
+
+      // Day 1
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+        ['ICSEECR 2026 Program — Arrival & Registration'],
+        ['Date: Mon, 20 Jul 2026'],
+        [],
+        ['Time', 'Speaker', 'Title'],
+        ['All Day', '—', 'Arrival, Check-in & Registration Desk Open (Hostel / Secretariat) — no paper presentations scheduled']
+      ]), 'Day 1');
+
+      // Day 2 — opening + ALL keynotes + industrial lead + lunch, then live parallel sessions from 14:15
+      var day2Rows = rows.filter(function (r) { return r.day === 'Day 2'; });
+      var day2Aoa = [
+        ['ICSEECR 2026 Program — Day 2'],
+        ['Date: Tue, 21 Jul 2026'],
+        [],
+        ['Opening Ceremony & Keynote Session — Main Auditorium'],
+        ['Time (WAT)', 'Speaker', 'Title'],
+        ['10:30', 'Dr. Sanni Kehinde Oseni — Rector, Gateway ICT Polytechnic', 'Welcome & Opening Remarks'],
+        ['10:40', 'Engr. Dr. Kadiri Kamoru Oluwatoyin, FNSE — Chief Guest of Honour, Rector, Federal Polytechnic Offa', 'Chief Guest of Honour Remarks'],
+        ['10:50', 'Prof. Emeritus Alireza Baghai-Wadji — South Africa', 'Keynote Address 1'],
+        ['11:20', 'Prof. Y. L. Shuaib-Babata — University of Ilorin, Nigeria', 'Keynote Address 2'],
+        ['11:50', '—', 'Group Photograph'],
+        ['12:00–12:15', '—', 'Break'],
+        ['12:15', 'Dr. Arc. Oluseyi Israel Abatan — Moshood Abiola Polytechnic, Nigeria', 'Keynote Address 4'],
+        ['12:45', 'Engr. Felix Adewale Odeleye — Nuclear Power Construction Engineer, UK', 'Industrial Lead Paper Presentation'],
+        ['13:15–14:15', '—', 'Lunch Break'],
+        [],
+        ['Parallel Technical Sessions (from 14:15)'],
+        ['Time (WAT)', 'Hall', 'Track', 'Speaker', 'Title', 'Submission ID']
+      ];
+      if (!day2Rows.length) {
+        day2Aoa.push(['—', '—', '—', '—', 'No accepted papers yet for this window', '—']);
+      } else {
+        day2Rows.forEach(function (r) { day2Aoa.push([r.time, r.hall, r.track, r.speaker, r.title, r.submissionId]); });
+      }
+      var wsDay2 = XLSX.utils.aoa_to_sheet(day2Aoa);
+      wsDay2['!cols'] = [{ wch: 12 }, { wch: 26 }, { wch: 30 }, { wch: 26 }, { wch: 50 }, { wch: 16 }];
+      XLSX.utils.book_append_sheet(wb, wsDay2, 'Day 2');
+
+      // Day 3 — Keynotes 3 & 5 relocated here, then live parallel sessions / Day 4 — pure live
+      ['Day 3', 'Day 4'].forEach(function (dayLabel) {
+        var dayRows = rows.filter(function (r) { return r.day === dayLabel; });
+        var aoa = [
+          ['ICSEECR 2026 Program — ' + dayLabel],
+          ['Date: ' + (dayLabel === 'Day 3' ? 'Wed, 22 Jul 2026' : 'Thu, 23 Jul 2026')]
+        ];
+        if (dayLabel === 'Day 3') {
+          aoa.push([]);
+          aoa.push(['Keynote Session — Main Auditorium']);
+          aoa.push(['Time (WAT)', 'Speaker', 'Title']);
+          aoa.push(['10:30', 'Dr. Rilwan Kayode Apalowo — Universiti Sains Malaysia', 'Keynote Address 3']);
+          aoa.push(['11:00', 'Dr. Emmanuel S. Babatunde — Achievers University, Owo, Nigeria', 'Keynote Address 5']);
+        }
+        aoa.push([]);
+        aoa.push(['Parallel Technical Sessions']);
+        aoa.push(['Time (WAT)', 'Hall', 'Track', 'Speaker', 'Title', 'Submission ID']);
+        if (!dayRows.length) {
+          aoa.push(['—', '—', '—', '—', 'No accepted papers yet for this day', '—']);
+        } else {
+          dayRows.forEach(function (r) {
+            aoa.push([r.time, r.hall, r.track, r.speaker, r.title, r.submissionId]);
+          });
+        }
+        if (dayLabel === 'Day 3') aoa.push([], ['18:00', 'Exhibition Hall', 'Poster Session', '—', 'Poster Session', '—']);
+        if (dayLabel === 'Day 4') aoa.push([], ['TBA', 'Main Auditorium', '—', '—', 'Closing Remarks & Awards Ceremony', '—']);
+        var ws = XLSX.utils.aoa_to_sheet(aoa);
+        ws['!cols'] = [{ wch: 12 }, { wch: 26 }, { wch: 30 }, { wch: 26 }, { wch: 50 }, { wch: 16 }];
+        XLSX.utils.book_append_sheet(wb, ws, dayLabel);
+      });
+
+      // Overflow — only appears if a track's paper count exceeds the fixed
+      // Day 2–4 timeline capacity; keeps growing here without ever touching
+      // an already-scheduled presenter's slot.
+      var overflowRows = rows.filter(function (r) { return r.day.indexOf('Additional Session') === 0; });
+      if (overflowRows.length) {
+        var overflowAoa = [
+          ['ICSEECR 2026 Program — Additional Session (Date/Time TBA)'],
+          ['These papers were accepted after the Day 2–4 schedule filled up. They will be assigned a confirmed date/time as soon as the committee finalises extra session slots.'],
+          [],
+          ['Hall', 'Track', 'Speaker', 'Title', 'Submission ID']
+        ];
+        overflowRows.forEach(function (r) { overflowAoa.push([r.hall, r.track, r.speaker, r.title, r.submissionId]); });
+        var wsOverflow = XLSX.utils.aoa_to_sheet(overflowAoa);
+        wsOverflow['!cols'] = [{ wch: 12 }, { wch: 30 }, { wch: 26 }, { wch: 50 }, { wch: 16 }];
+        XLSX.utils.book_append_sheet(wb, wsOverflow, 'Additional Session');
+      }
+
+      // Day 5
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([
+        ['Departure'],
+        ['Date: Fri, 24 Jul 2026'],
+        [],
+        ['Time', 'Speaker', 'Title'],
+        ['All Day', '—', 'Check-out & Departure of Delegates (Hostel / Guest House) — no paper presentations scheduled']
+      ]), 'Day 5');
+
+      XLSX.writeFile(wb, 'ICSEECR2026_Program_Timetable.xlsx');
+      downloadBtn.disabled = false;
+      downloadBtn.textContent = '⬇ Download Full Program (Excel)';
+    });
+  }
+})();
+</script>
+
 <!-- Floating admin control ("script menu") for the Accepted Abstracts widget -->
 <button id="aa-admin-toggle" class="aa-admin-toggle" title="Accepted Abstracts display settings" aria-label="Accepted Abstracts display settings">⚙️</button>
 <div id="aa-admin-panel" class="aa-admin-panel">
@@ -2393,6 +2913,63 @@
   </div>
   <p class="aa-admin-note">This switch only affects what <em>you</em> see on this device/browser. The real publish ON/OFF control — and editing of accepted paper details — is managed by the committee from the Google Sheet menu: <strong>ICSEECR Tools ▸ 🌐 Accepted Abstracts (Website)</strong>.</p>
 </div>
+
+<!-- ═══════════════ SINGLE-SECTION PAGE NAVIGATION ═══════════════ -->
+<script>
+(function () {
+  var PAGE_IDS = ['welcome','keynotes','industrial-lead','chief-guest','themes','tracks',
+                   'guidelines','accepted-abstracts','program','fullpaper','registration',
+                   'awards','leadership','tpc','submit','sponsors','contact'];
+  var DEFAULT_PAGE = 'welcome';
+
+  var sectionEls = {};
+  PAGE_IDS.forEach(function (id) { sectionEls[id] = document.getElementById(id); });
+
+  var navBtns = document.querySelectorAll('.page-nav-btn');
+  var navBtnById = {};
+  navBtns.forEach(function (btn) { navBtnById[btn.getAttribute('data-page')] = btn; });
+
+  function showPage(id, opts) {
+    opts = opts || {};
+    if (!sectionEls[id]) id = DEFAULT_PAGE;
+    PAGE_IDS.forEach(function (pid) {
+      if (sectionEls[pid]) sectionEls[pid].classList.toggle('page-active', pid === id);
+      if (navBtnById[pid]) navBtnById[pid].classList.toggle('active', pid === id);
+    });
+    if (!opts.noScroll) window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    if (!opts.noHistory && history.pushState) {
+      history.pushState({ page: id }, '', '#' + id);
+    }
+  }
+
+  // Sidebar buttons
+  navBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () { showPage(btn.getAttribute('data-page')); });
+  });
+
+  // Intercept ANY existing in-page link (top navbar, section sub-nav, footer
+  // quick links) that points to one of our section ids, so the old nav UI
+  // keeps working under the new single-page-visible model.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (PAGE_IDS.indexOf(id) !== -1) {
+      e.preventDefault();
+      showPage(id);
+    }
+  });
+
+  window.addEventListener('popstate', function (e) {
+    var id = (e.state && e.state.page) || (location.hash ? location.hash.slice(1) : DEFAULT_PAGE);
+    showPage(id, { noHistory: true });
+  });
+
+  // Initial page on load — honour a deep link like #program if present
+  var initial = location.hash ? location.hash.slice(1) : DEFAULT_PAGE;
+  showPage(initial, { noHistory: true, noScroll: true });
+})();
+</script>
 
 </body>
 </html>
