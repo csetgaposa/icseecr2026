@@ -1465,6 +1465,8 @@
 
 </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 
@@ -1878,8 +1880,9 @@
     <!-- PROGRAM -->
     <section id="program" class="conf-section">
       <h2 class="section-heading"><div class="sh-icon">🗓️</div> Conference Program<span class="prog-live-tag" id="prog-live-tag">● LIVE</span></h2>
-      <div style="margin:0.8rem 0 0.4rem;">
+      <div style="margin:0.8rem 0 0.4rem;display:flex;gap:10px;flex-wrap:wrap;">
         <button id="prog-download-btn" class="prog-download-btn">⬇ Download Full Program (Excel)</button>
+        <button id="prog-download-word-btn" class="prog-download-btn" style="background:linear-gradient(135deg,var(--forest),var(--forest-vivid));">⬇ Download Presenter Schedule (PDF)</button>
       </div>
       <div class="notice-box">
         <span class="ni">📢</span>
@@ -1901,7 +1904,7 @@
 
       <!-- OVERVIEW -->
       <div class="prog-panel active" id="prog-overview">
-        <div class="prog-daymeta">Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria · 20–24 July 2026 · Timezone: WAT (UTC+1)</div>
+        <div class="prog-daymeta">Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria · 20–24 July 2026 · Timezone: Nigeria Time (WAT, UTC+1)</div>
         <table class="prog-overview-table">
           <tr><th>Day</th><th>Date</th><th>Focus</th></tr>
           <tr><td>Day 1</td><td>Mon, 20 Jul</td><td>Arrival &amp; Registration — no sessions</td></tr>
@@ -2600,6 +2603,13 @@
   // (day, time) pair — adding more papers later only extends the list,
   // it never changes where index 0..N-1 land. This is what gives
   // presenters a time that won't move once they've seen it.
+  //
+  // ⚠️ IMPORTANT: the schedule below (10:30 opening, break after Keynote 3,
+  // Keynotes 3&5 on Day 3, live sessions from 14:15/11:30/10:30) has been
+  // COMMUNICATED to participants. Do NOT change these window start/end
+  // times or ceremony ordering — doing so reshuffles every already-assigned
+  // presenter's slot, even though their relative order stays the same.
+  // New papers are safe to add; the ceremony structure itself is frozen.
   function buildTimeline() {
     var slots = [];
     function addWindow(day, start, end) {
@@ -2768,7 +2778,7 @@
       // Program Overview sheet
       var overviewAoa = [
         ['ICSEECR 2026 — Program Overview'],
-        ['Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria  |  20–24 July 2026  |  Timezone: WAT (UTC+1)'],
+        ['Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria  |  20–24 July 2026  |  Timezone: Nigeria Time (WAT, UTC+1)'],
         [],
         ['Day', 'Date', 'Focus'],
         ['Day 1', 'Mon, 20 Jul 2026', 'Arrival & Registration — no sessions'],
@@ -2808,7 +2818,7 @@
         ['Date: Tue, 21 Jul 2026'],
         [],
         ['Opening Ceremony & Keynote Session — Main Auditorium'],
-        ['Time (WAT)', 'Speaker', 'Title'],
+        ['Time (Nigeria/WAT)', 'Speaker', 'Title'],
         ['10:30', 'Dr. Sanni Kehinde Oseni — Rector, Gateway ICT Polytechnic', 'Welcome & Opening Remarks'],
         ['10:40', 'Engr. Dr. Kadiri Kamoru Oluwatoyin, FNSE — Chief Guest of Honour, Rector, Federal Polytechnic Offa', 'Chief Guest of Honour Remarks'],
         ['10:50', 'Prof. Emeritus Alireza Baghai-Wadji — South Africa', 'Keynote Address 1'],
@@ -2820,7 +2830,7 @@
         ['13:15–14:15', '—', 'Lunch Break'],
         [],
         ['Parallel Technical Sessions (from 14:15)'],
-        ['Time (WAT)', 'Hall', 'Track', 'Speaker', 'Title', 'Submission ID']
+        ['Time (Nigeria/WAT)', 'Hall', 'Track', 'Speaker', 'Title', 'Submission ID']
       ];
       if (!day2Rows.length) {
         day2Aoa.push(['—', '—', '—', '—', 'No accepted papers yet for this window', '—']);
@@ -2828,7 +2838,7 @@
         day2Rows.forEach(function (r) { day2Aoa.push([r.time, r.hall, r.track, r.speaker, r.title, r.submissionId]); });
       }
       var wsDay2 = XLSX.utils.aoa_to_sheet(day2Aoa);
-      wsDay2['!cols'] = [{ wch: 12 }, { wch: 26 }, { wch: 30 }, { wch: 26 }, { wch: 50 }, { wch: 16 }];
+      wsDay2['!cols'] = [{ wch: 18 }, { wch: 26 }, { wch: 30 }, { wch: 26 }, { wch: 50 }, { wch: 16 }];
       XLSX.utils.book_append_sheet(wb, wsDay2, 'Day 2');
 
       // Day 3 — Keynotes 3 & 5 relocated here, then live parallel sessions / Day 4 — pure live
@@ -2841,13 +2851,13 @@
         if (dayLabel === 'Day 3') {
           aoa.push([]);
           aoa.push(['Keynote Session — Main Auditorium']);
-          aoa.push(['Time (WAT)', 'Speaker', 'Title']);
+          aoa.push(['Time (Nigeria/WAT)', 'Speaker', 'Title']);
           aoa.push(['10:30', 'Dr. Rilwan Kayode Apalowo — Universiti Sains Malaysia', 'Keynote Address 3']);
           aoa.push(['11:00', 'Dr. Emmanuel S. Babatunde — Achievers University, Owo, Nigeria', 'Keynote Address 5']);
         }
         aoa.push([]);
         aoa.push(['Parallel Technical Sessions']);
-        aoa.push(['Time (WAT)', 'Hall', 'Track', 'Speaker', 'Title', 'Submission ID']);
+        aoa.push(['Time (Nigeria/WAT)', 'Hall', 'Track', 'Speaker', 'Title', 'Submission ID']);
         if (!dayRows.length) {
           aoa.push(['—', '—', '—', '—', 'No accepted papers yet for this day', '—']);
         } else {
@@ -2858,7 +2868,7 @@
         if (dayLabel === 'Day 3') aoa.push([], ['18:00', 'Exhibition Hall', 'Poster Session', '—', 'Poster Session', '—']);
         if (dayLabel === 'Day 4') aoa.push([], ['TBA', 'Main Auditorium', '—', '—', 'Closing Remarks & Awards Ceremony', '—']);
         var ws = XLSX.utils.aoa_to_sheet(aoa);
-        ws['!cols'] = [{ wch: 12 }, { wch: 26 }, { wch: 30 }, { wch: 26 }, { wch: 50 }, { wch: 16 }];
+        ws['!cols'] = [{ wch: 18 }, { wch: 26 }, { wch: 30 }, { wch: 26 }, { wch: 50 }, { wch: 16 }];
         XLSX.utils.book_append_sheet(wb, ws, dayLabel);
       });
 
@@ -2891,6 +2901,282 @@
       XLSX.writeFile(wb, 'ICSEECR2026_Program_Timetable.xlsx');
       downloadBtn.disabled = false;
       downloadBtn.textContent = '⬇ Download Full Program (Excel)';
+    });
+  }
+
+  // ── Download full presenter schedule as a beautifully formatted PDF ──
+  var downloadWordBtn = document.getElementById('prog-download-word-btn');
+  if (downloadWordBtn) {
+    downloadWordBtn.addEventListener('click', function () {
+      if (typeof window.jspdf === 'undefined') {
+        alert('PDF library is still loading — please try again in a moment.');
+        return;
+      }
+      downloadWordBtn.disabled = true;
+      downloadWordBtn.textContent = 'Preparing PDF…';
+
+      var rows = latestScheduleForDownload || [];
+      var totalPapers = rows.length;
+      var jsPDF = window.jspdf.jsPDF;
+      var doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      var pageWidth = doc.internal.pageSize.getWidth();
+      var pageHeight = doc.internal.pageSize.getHeight();
+      var margin = 40;
+      var y = 50;
+
+      // ── Palette ──
+      var FOREST   = [5, 43, 31];
+      var FOREST2  = [10, 68, 48];
+      var EMERALD  = [26, 138, 90];
+      var JADE     = [34, 184, 118];
+      var GOLD     = [201, 151, 58];
+      var GOLDLT   = [232, 184, 75];
+      var IVORY    = [249, 247, 242];
+      var WHITE    = [255, 255, 255];
+      var GREY     = [102, 102, 102];
+      var DAY2C = GOLD, DAY2LT = [253, 241, 214];
+      var DAY3C = EMERALD, DAY3LT = [227, 241, 233];
+      var DAY4C = FOREST2, DAY4LT = [220, 231, 240];
+
+      function shortId(id) {
+        var m = /(\d+)$/.exec(id || '');
+        return m ? '#' + m[1] : (id || '');
+      }
+      function ensureSpace(needed) {
+        if (y + needed > pageHeight - 60) {
+          doc.addPage();
+          y = 66;
+        }
+      }
+      function setFill(c) { doc.setFillColor(c[0], c[1], c[2]); }
+      function setText(c) { doc.setTextColor(c[0], c[1], c[2]); }
+      function setDraw(c) { doc.setDrawColor(c[0], c[1], c[2]); }
+
+      // Rounded "chip" banner used for each Day heading
+      function dayBanner(text, color) {
+        ensureSpace(34);
+        setFill(color);
+        doc.roundedRect(margin, y, pageWidth - margin * 2, 26, 6, 6, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(13);
+        setText(WHITE);
+        doc.text(text, margin + 12, y + 17.5);
+        y += 40;
+      }
+      // Sub-heading with a small colored accent bar on the left
+      function subHeading(text, color, size) {
+        size = size || 11.5;
+        ensureSpace(size + 12);
+        setFill(color);
+        doc.rect(margin, y - size + 3, 4, size, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(size);
+        setText(color);
+        doc.text(text, margin + 10, y);
+        y += size * 1.05 + 6;
+      }
+      function bodyText(text, size, color) {
+        size = size || 10;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(size);
+        setText(color || [40, 40, 40]);
+        var lines = doc.splitTextToSize(text, pageWidth - margin * 2);
+        ensureSpace(lines.length * (size + 2) + 6);
+        doc.text(lines, margin, y);
+        y += lines.length * (size + 2) + 8;
+      }
+      function ceremonyTable(items, theme, lightTheme) {
+        doc.autoTable({
+          startY: y,
+          margin: { left: margin, right: margin },
+          head: [['Time (Nigeria/WAT)', 'Speaker', 'Item / Topic']],
+          body: items,
+          styles: { fontSize: 9, cellPadding: 6, lineColor: [225, 225, 225], lineWidth: 0.5 },
+          headStyles: { fillColor: theme, textColor: 255, fontStyle: 'bold', fontSize: 9.5 },
+          alternateRowStyles: { fillColor: lightTheme },
+          columnStyles: { 0: { cellWidth: 90, fontStyle: 'bold' }, 1: { cellWidth: 220 } },
+          didDrawPage: function (data) { y = data.cursor.y + 14; }
+        });
+        y = doc.lastAutoTable.finalY + 16;
+      }
+      function sessionTable(list, theme, lightTheme) {
+        var body = list.map(function (r) {
+          return [r.time, r.hall, r.track, r.speaker, r.title, shortId(r.submissionId)];
+        });
+        doc.autoTable({
+          startY: y,
+          margin: { left: margin, right: margin },
+          head: [['Time', 'Hall', 'Track', 'Presenter', 'Paper Title', 'ID']],
+          body: body,
+          styles: { fontSize: 8, cellPadding: 4.5, overflow: 'linebreak', lineColor: [225, 225, 225], lineWidth: 0.4 },
+          headStyles: { fillColor: theme, textColor: 255, fontStyle: 'bold' },
+          alternateRowStyles: { fillColor: lightTheme },
+          columnStyles: {
+            0: { cellWidth: 55, fontStyle: 'bold' }, 1: { cellWidth: 45 }, 2: { cellWidth: 90 },
+            3: { cellWidth: 85 }, 4: { cellWidth: 'auto' }, 5: { cellWidth: 35, textColor: theme, fontStyle: 'bold' }
+          },
+          didDrawPage: function (data) { y = data.cursor.y + 10; }
+        });
+        y = doc.lastAutoTable.finalY + 18;
+      }
+      function byDayHall(day) {
+        var filtered = rows.filter(function (r) { return r.day === day; });
+        var groups = {}, order = [];
+        filtered.forEach(function (r) {
+          if (!groups[r.hall]) { groups[r.hall] = []; order.push(r.hall); }
+          groups[r.hall].push(r);
+        });
+        return { groups: groups, order: order, count: filtered.length };
+      }
+      function hallSections(dayData, theme, lightTheme) {
+        dayData.order.forEach(function (hall) {
+          var list = dayData.groups[hall];
+          subHeading(hall + '  \u2014  ' + list[0].track + '   (' + list.length + ' presentations)', theme, 11);
+          sessionTable(list, theme, lightTheme);
+        });
+      }
+
+      // ── Cover masthead ──
+      setFill(FOREST);
+      doc.rect(0, 0, pageWidth, 108, 'F');
+      setFill(GOLD);
+      doc.rect(0, 108, pageWidth, 4, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(25);
+      setText(WHITE);
+      doc.text('ICSEECR 2026', pageWidth / 2, 46, { align: 'center' });
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(11.5);
+      setText([200, 230, 215]);
+      doc.text('International Conference on Sustainable Engineering, Environmental Innovation & Climate Resilience', pageWidth / 2, 66, { align: 'center', maxWidth: pageWidth - margin * 2 });
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      setText([220, 235, 228]);
+      doc.text('Full Conference Program  \u00b7  All Paper Presenters  \u00b7  20\u201324 July 2026  \u00b7  Gateway ICT Polytechnic, Saapade, Ogun State, Nigeria', pageWidth / 2, 90, { align: 'center', maxWidth: pageWidth - margin * 2 });
+      y = 132;
+
+      // Intro info box
+      setFill(IVORY);
+      setDraw([220, 214, 200]);
+      var introLines = doc.splitTextToSize('This document lists the confirmed presentation schedule for all ' + totalPapers + ' currently accepted papers, generated live from the Organising Committee\'s Accepted Abstracts records at the time of download. All times are given in Nigeria Time (West Africa Time, WAT, UTC+1). Presenters keep their assigned time regardless of later additions to the schedule.', pageWidth - margin * 2 - 20);
+      var boxH = introLines.length * 12.5 + 30;
+      doc.roundedRect(margin, y, pageWidth - margin * 2, boxH, 5, 5, 'FD');
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      setText([60, 60, 60]);
+      doc.text(introLines, margin + 12, y + 18);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8.5);
+      setText(GREY);
+      doc.text('Submission IDs are shown in short form (e.g. "#045"); the full reference is ICSEECR-2026-045.', margin + 12, y + boxH - 10);
+      y += boxH + 22;
+
+      dayBanner('DAY 1  \u2014  Monday, 20 July 2026', [120, 120, 120]);
+      bodyText('Arrival & Check-in of delegates. Registration desk open. No paper presentations scheduled.', 10);
+      y += 6;
+
+      var day2Data = byDayHall('Day 2');
+      var day3Data = byDayHall('Day 3');
+      var day4Data = byDayHall('Day 4');
+
+      dayBanner('DAY 2  \u2014  Tuesday, 21 July 2026', DAY2C);
+      subHeading('Opening Ceremony & Keynote Session \u2014 Main Auditorium', DAY2C, 11.5);
+      ceremonyTable([
+        ['10:30', 'Dr. Sanni Kehinde Oseni \u2014 Rector, Gateway ICT Polytechnic', 'Welcome & Opening Remarks'],
+        ['10:40', 'Engr. Dr. Kadiri Kamoru Oluwatoyin, FNSE \u2014 Chief Guest of Honour, Federal Polytechnic Offa', 'Chief Guest of Honour Remarks'],
+        ['10:50', 'Prof. Emeritus Alireza Baghai-Wadji \u2014 South Africa', 'Keynote Address 1'],
+        ['11:20', 'Prof. Y. L. Shuaib-Babata \u2014 University of Ilorin, Nigeria', 'Keynote Address 2'],
+        ['11:50', '\u2014', 'Group Photograph'],
+        ['12:00\u201312:15', '\u2014', 'Break'],
+        ['12:15', 'Dr. Arc. Oluseyi Israel Abatan \u2014 Moshood Abiola Polytechnic, Nigeria', 'Keynote Address 4'],
+        ['12:45', 'Engr. Felix Adewale Odeleye \u2014 Nuclear Power Construction Engineer, UK', 'Industrial Lead Paper Presentation'],
+        ['13:15\u201314:15', '\u2014', 'Lunch Break']
+      ], DAY2C, DAY2LT);
+      subHeading('Parallel Technical Sessions \u2014 from 14:15  (' + day2Data.count + ' presentations)', FOREST2, 12);
+      hallSections(day2Data, DAY2C, DAY2LT);
+
+      dayBanner('DAY 3  \u2014  Wednesday, 22 July 2026', DAY3C);
+      subHeading('Keynote Session \u2014 Main Auditorium', DAY3C, 11.5);
+      ceremonyTable([
+        ['10:30', 'Dr. Rilwan Kayode Apalowo \u2014 Universiti Sains Malaysia', 'Keynote Address 3'],
+        ['11:00', 'Dr. Emmanuel S. Babatunde \u2014 Achievers University, Owo, Nigeria', 'Keynote Address 5']
+      ], DAY3C, DAY3LT);
+      subHeading('Parallel Technical Sessions \u2014 from 11:30  (' + day3Data.count + ' presentations)', FOREST2, 12);
+      hallSections(day3Data, DAY3C, DAY3LT);
+      subHeading('Poster Session', DAY3C, 11.5);
+      bodyText('18:00 \u2014 Exhibition Hall \u2014 Poster Session (open to all accepted poster submissions).', 10);
+      y += 4;
+
+      dayBanner('DAY 4  \u2014  Thursday, 23 July 2026', DAY4C);
+      subHeading('Parallel Technical Sessions  (' + day4Data.count + ' presentation' + (day4Data.count === 1 ? '' : 's') + ')', DAY4C, 11.5);
+      if (day4Data.count) { hallSections(day4Data, DAY4C, DAY4LT); } else { bodyText('No presentations currently scheduled for this day.', 10); }
+      subHeading('Closing Ceremony \u2014 Main Auditorium', DAY4C, 11.5);
+      bodyText('TBA \u2014 Closing Remarks & Awards Ceremony.', 10);
+      y += 4;
+
+      dayBanner('DAY 5  \u2014  Friday, 24 July 2026', [120, 120, 120]);
+      bodyText('Check-out & Departure of delegates. No paper presentations scheduled.', 10);
+      y += 8;
+
+      // Notes box
+      ensureSpace(140);
+      var notes = [
+        'Each session slot is 15 minutes. Please plan your presentation to conclude within 12 minutes to allow time for questions and room transition.',
+        'Presenters should arrive at their assigned hall at least 10 minutes before their scheduled slot.',
+        'Slides (PowerPoint, 16:9 widescreen) should be submitted to session chairs before the session begins, or brought on a USB drive.',
+        'This schedule reflects the live Accepted Abstracts feed at the moment this document was downloaded. Check the conference website\'s Program page for the most current version.'
+      ];
+      var noteLineArrays = notes.map(function (t) { return doc.splitTextToSize('\u2022  ' + t, pageWidth - margin * 2 - 24); });
+      var notesH = 34 + noteLineArrays.reduce(function (s, l) { return s + l.length * 12.5 + 4; }, 0);
+      ensureSpace(notesH);
+      setFill([253, 241, 214]);
+      setDraw(GOLD);
+      doc.roundedRect(margin, y, pageWidth - margin * 2, notesH, 5, 5, 'FD');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12.5);
+      setText(GOLD.map ? [153, 112, 30] : GOLD);
+      doc.text('Notes for Presenters', margin + 14, y + 22);
+      var ny = y + 40;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      setText([70, 60, 30]);
+      noteLineArrays.forEach(function (lines) {
+        doc.text(lines, margin + 14, ny);
+        ny += lines.length * 12.5 + 4;
+      });
+      y = y + notesH + 10;
+
+      // ── Masthead strip + footer on every page ──
+      var pageCount = doc.internal.getNumberOfPages();
+      for (var i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        if (i > 1) {
+          setFill(FOREST);
+          doc.rect(0, 0, pageWidth, 30, 'F');
+          setFill(GOLD);
+          doc.rect(0, 30, pageWidth, 2, 'F');
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(10);
+          setText(WHITE);
+          doc.text('ICSEECR 2026 \u2014 Full Conference Program', margin, 19.5);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8.5);
+          setText([200, 225, 212]);
+          doc.text('All Paper Presenters', pageWidth - margin, 19.5, { align: 'right' });
+        }
+        setFill(EMERALD);
+        doc.rect(0, pageHeight - 26, pageWidth, 26, 'F');
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8.5);
+        setText(WHITE);
+        doc.text('ICSEECR 2026  \u00b7  Gateway ICT Polytechnic, Saapade', margin, pageHeight - 10);
+        doc.text('Page ' + i + ' of ' + pageCount, pageWidth - margin, pageHeight - 10, { align: 'right' });
+      }
+
+      doc.save('ICSEECR2026_Full_Presenter_Schedule.pdf');
+
+      downloadWordBtn.disabled = false;
+      downloadWordBtn.textContent = '\u2b07 Download Presenter Schedule (PDF)';
     });
   }
 })();
