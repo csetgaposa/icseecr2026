@@ -1866,8 +1866,10 @@
       </div>
       <div id="aa-toolbar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.6rem;margin-bottom:1rem;">
         <div id="aa-count" style="font-size:13px;color:var(--slate);font-weight:600;"></div>
-        <div style="display:flex;align-items:center;gap:0.6rem;">
+        <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
           <span id="aa-updated" style="font-size:11.5px;color:var(--muted);"></span>
+          <a id="boa-download-btn" href="#" target="_blank" rel="noopener" style="display:none;background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:var(--forest);border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;">⬇ Download Book of Abstracts (PDF)</a>
+          <span id="boa-pending" style="display:none;font-size:11.5px;color:var(--muted);font-style:italic;">Book of Abstracts not yet published</span>
           <button id="aa-refresh-btn" type="button" style="background:var(--forest);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;">🔄 Refresh</button>
         </div>
       </div>
@@ -2515,8 +2517,45 @@
     }, 8000);
   }
 
-  if (refreshBtn) refreshBtn.addEventListener('click', loadAbstracts);
+  // ── Book of Abstracts (PDF) — reuses the same Apps Script web app,
+  // action=bookofabstracts, JSONP for the same CORS reason as above.
+  // The link it returns points at a fixed-name PDF in Drive, so it
+  // stays valid across every "Update Book of Abstracts" run in the
+  // Google Sheet — the button here never needs to change. ──
+  var boaBtn     = document.getElementById('boa-download-btn');
+  var boaPending = document.getElementById('boa-pending');
+  var boaCallbackName = 'icseecr2026BookOfAbstracts';
+
+  window[boaCallbackName] = function (data) {
+    if (!boaBtn || !boaPending) return;
+    if (data && data.url) {
+      boaBtn.href = data.url;
+      boaBtn.style.display = '';
+      boaPending.style.display = 'none';
+    } else {
+      boaBtn.style.display = 'none';
+      boaPending.style.display = '';
+    }
+  };
+
+  function loadBookOfAbstractsLink() {
+    if (!boaBtn) return;
+    if (!AA_ENDPOINT || AA_ENDPOINT.indexOf('PASTE_YOUR') === 0) return;
+    var prevTag = document.getElementById('boa-jsonp-tag');
+    if (prevTag) prevTag.remove();
+    var s = document.createElement('script');
+    s.id = 'boa-jsonp-tag';
+    s.src = AA_ENDPOINT + '?action=bookofabstracts&callback=' + boaCallbackName + '&t=' + Date.now();
+    s.onerror = function () {
+      if (boaBtn) boaBtn.style.display = 'none';
+      if (boaPending) boaPending.style.display = '';
+    };
+    document.head.appendChild(s);
+  }
+
+  if (refreshBtn) refreshBtn.addEventListener('click', function () { loadAbstracts(); loadBookOfAbstractsLink(); });
   loadAbstracts();
+  loadBookOfAbstractsLink();
   // Auto-refresh is intentionally slow (every 10 minutes) so the list stays
   // put long enough for authors to read through every accepted abstract
   // without it jumping/reflowing under them. This does NOT affect how
@@ -2526,7 +2565,7 @@
   // right after the committee runs "Publish / Sync Now" from the Google
   // Sheet ("ICSEECR Tools ▸ 🌐 Accepted Abstracts (Website)").
   var AA_AUTO_REFRESH_MS = 10 * 60 * 1000; // 10 minutes
-  setInterval(loadAbstracts, AA_AUTO_REFRESH_MS);
+  setInterval(function () { loadAbstracts(); loadBookOfAbstractsLink(); }, AA_AUTO_REFRESH_MS);
 
   // ── Local admin reveal panel (purely a viewing convenience for
   // committee members on shared devices; it does NOT control the
@@ -2563,7 +2602,7 @@
     });
   }
   var manualRefreshLink = document.getElementById('aa-admin-refresh');
-  if (manualRefreshLink) manualRefreshLink.addEventListener('click', function (e) { e.preventDefault(); loadAbstracts(); });
+  if (manualRefreshLink) manualRefreshLink.addEventListener('click', function (e) { e.preventDefault(); loadAbstracts(); loadBookOfAbstractsLink(); });
 })();
 </script>
 
