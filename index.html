@@ -3588,7 +3588,11 @@
       if (sectionEls[pid]) sectionEls[pid].classList.toggle('page-active', pid === id);
       if (navBtnById[pid]) navBtnById[pid].classList.toggle('active', pid === id);
     });
-    if (!opts.noScroll) window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    if (!opts.noScroll) {
+      var navEl = document.querySelector('.section-nav');
+      var targetTop = navEl ? (navEl.getBoundingClientRect().top + window.pageYOffset) : 0;
+      window.scrollTo({ top: targetTop, behavior: 'instant' in window ? 'instant' : 'auto' });
+    }
     if (!opts.noHistory && history.pushState) {
       history.pushState({ page: id }, '', '#' + id);
     }
