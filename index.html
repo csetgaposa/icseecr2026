@@ -2666,7 +2666,8 @@
   window[oboaCallbackName] = function (data) {
     if (!oboaBtn || !oboaPending) return;
     if (data && data.url) {
-      oboaBtn.href = data.url;
+      oboaBtn.href = _oboaToDirectDownloadUrl(data.url);
+      oboaBtn.setAttribute('download', ''); // hint to save rather than navigate, where the browser honors it
       oboaBtn.style.display = '';
       oboaPending.style.display = 'none';
     } else {
@@ -2674,6 +2675,18 @@
       oboaPending.style.display = '';
     }
   };
+
+  // A github.com/.../blob/... link opens GitHub's HTML preview page
+  // (that's the "opens on GitHub" behavior). The equivalent
+  // raw.githubusercontent.com link serves the actual PDF bytes as
+  // application/octet-stream, which browsers save/download instead
+  // of navigating to. Converts only if it's a recognizable GitHub
+  // blob URL — any other URL (Drive, etc.) passes through unchanged.
+  function _oboaToDirectDownloadUrl(url) {
+    var m = /^https?:\/\/github\.com\/([^\/]+)\/([^\/]+)\/blob\/(.+)$/.exec(url);
+    if (!m) return url;
+    return 'https://raw.githubusercontent.com/' + m[1] + '/' + m[2] + '/' + m[3];
+  }
 
   function loadOfficialBookOfAbstractsLink() {
     if (!oboaBtn) return;
